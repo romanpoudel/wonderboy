@@ -1,8 +1,8 @@
 export class Platform{
-    constructor(){
+    constructor({x,y}){
         this.position={
-            x:10,
-            y:60
+            x,
+            y
         }
         this.width = 200;
         this.height = 10;

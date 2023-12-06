@@ -19,13 +19,13 @@ addEventListener("keydown", function ({ key }) {
 		case "w":
 			keys.w = true;
 			break;
-		case "LeftArrow":
+		case "ArrowLeft":
 			keys.leftArrow = true;
 			break;
-		case "RightArrow":
+		case "ArrowRight":
 			keys.rightArrow = true;
 			break;
-		case "UpArrow":
+		case "ArrowUp":
 			keys.upArrow = true;
 			break;
 		case " ":
@@ -45,13 +45,13 @@ addEventListener("keyup", function ({ key }) {
 		case "w":
 			keys.w = false;
 			break;
-		case "LeftArrow":
+		case "ArrowLeft":
 			keys.leftArrow = false;
 			break;
-		case "RightArrow":
+		case "ArrowRight":
 			keys.rightArrow = false;
 			break;
-		case "UpArrow":
+		case "ArrowUp":
 			keys.upArrow = false;
 			break;
 		case " ":

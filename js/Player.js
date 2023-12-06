@@ -3,6 +3,8 @@ import { CANVAS_HEIGHT, GRAVITY } from "./constants.js";
 
 export class Player {
 	constructor() {
+    this.image=new Image();
+    this.image.src="./assets/images/tropeca.png";
 		this.position={
       x:100,
       y:100
@@ -17,12 +19,14 @@ export class Player {
 	}
 
 	draw(ctx) {
-    ctx.strokeStyle = "green";
-    ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
+    // ctx.strokeStyle = "green";
+    // ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
+    ctx.drawImage(this.image,this.position.x,this.position.y,this.width,this.height);
   }
 
   update(ctx){
     this.draw(ctx);
+    this.position.x+=this.velocity.x;
     this.position.y+=this.velocity.y;
     if(this.position.y+this.height+this.velocity.y<CANVAS_HEIGHT){
       this.velocity.y+=GRAVITY;
