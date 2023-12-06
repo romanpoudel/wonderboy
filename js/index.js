@@ -23,6 +23,7 @@ function animate(){
   //collision detection
   if(collisionTop(player,platform)){
     player.velocity.y=0;
+    player.isAtPlatform=true;
   }else if(collisionBottom(player,platform)){
     player.velocity.y=-player.velocity.y;
   }

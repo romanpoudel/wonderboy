@@ -7,7 +7,7 @@ export function movement(player) {
 		player.position.x += 5;
 	} else if (keys.w || keys.upArrow) {
 		player.position.y -= 5;
-	} else if(keys.space){
-    player.velocity.y=-20;
+	} else if(keys.space && player.isAtPlatform){
+    player.velocity.y=-30;
   }
 }

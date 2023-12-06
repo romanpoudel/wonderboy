@@ -1,5 +1,4 @@
 import { CANVAS_HEIGHT, GRAVITY } from "./constants.js";
-import {keys} from "./input.js";
 
 
 export class Player {
@@ -14,6 +13,7 @@ export class Player {
       x:0,
       y:10
     }
+    this.isAtPlatform=false;
 	}
 
 	draw(ctx) {
@@ -26,8 +26,10 @@ export class Player {
     this.position.y+=this.velocity.y;
     if(this.position.y+this.height+this.velocity.y<CANVAS_HEIGHT){
       this.velocity.y+=GRAVITY;
+      this.isAtPlatform=false;
     }else{
       this.velocity.y=0;
+      this.isAtPlatform=true;
     }
   }
 }
