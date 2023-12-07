@@ -1,10 +1,11 @@
 import { CANVAS_HEIGHT, GRAVITY } from "./constants.js";
-
+import { createImage } from "./utils.js";
 
 export class Player {
 	constructor() {
-    this.image=new Image();
-    this.image.src="./assets/images/tropeca.png";
+    this.image=createImage("./assets/images/playerMoveRight1.png");
+    this.frames=0;
+    // this.image.src="./assets/images/playerMoveRight.png";
 		this.position={
       x:100,
       y:100
@@ -21,10 +22,11 @@ export class Player {
 	draw(ctx) {
     // ctx.strokeStyle = "green";
     // ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
-    ctx.drawImage(this.image,this.position.x,this.position.y,this.width,this.height);
+    ctx.drawImage(this.image,this.frames*90,0,90,this.image.height,this.position.x,this.position.y,this.width,this.height);
   }
 
   update(ctx){
+    //animate or change player image
     this.draw(ctx);
     this.position.x+=this.velocity.x;
     this.position.y+=this.velocity.y;
