@@ -1,15 +1,20 @@
+import { createImage } from "./utils.js";
+
 export class Platform{
-    constructor({x,y}){
+    constructor({x,y},image){
         this.position={
             x,
             y
         }
-        this.width = 200;
-        this.height = 10;
+        this.image=image;
+        // createImage("./assets/images/Plataforma.png");
+        this.width =this.image.width;
+        this.height = this.image.height;
     }
     draw(ctx){
-        ctx.fillStyle = "red";
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        // ctx.fillStyle = "red";
+        // ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+        ctx.drawImage(this.image,this.position.x, this.position.y,this.width,this.height);
     }
     update(ctx){
         this.draw(ctx);
