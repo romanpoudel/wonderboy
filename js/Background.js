@@ -7,7 +7,7 @@ export class Background {
 			x,
 			y,
 		};
-		this.image = createImage("./assets/images/background.jpg");
+		this.image = createImage("./assets/images/background1.jpg");
 	}
 	draw(ctx) {
 		ctx.drawImage(

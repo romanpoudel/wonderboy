@@ -2,7 +2,7 @@ import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./constants.js";
 import { Player } from "./Player.js";
 import { movement } from "./movement.js";
 import { Platform } from "./Platform.js";
-import { collisionBottom, collisionTop } from "./collision.js";
+import { collisionBottom, collisionSide, collisionTop } from "./collision.js";
 import { Background } from "./Background.js";
 import { createImage } from "./utils.js";
 //setup canvas
@@ -18,7 +18,7 @@ const backgrounds = [
 	new Background({ x: CANVAS_WIDTH * 2, y: 0 }),
 	new Background({ x: CANVAS_WIDTH * 3, y: 0 }),
 	new Background({ x: CANVAS_WIDTH * 4, y: 0 }),
-	new Background({ x: CANVAS_WIDTH * 5, y: 0 }),
+	new Background({ x: CANVAS_WIDTH * 5, y: 0 })
 ];
 
 //images
@@ -39,6 +39,7 @@ const platforms = [
 	new Platform({x: image.width * 4+450 ,y:300},image1),
 	new Platform({ x: image.width * 5 , y: CANVAS_HEIGHT - 90 }, image),
 	new Platform({ x: image.width * 6 , y: CANVAS_HEIGHT - 90 }, image),
+	new Platform({ x: image.width * 7 , y: CANVAS_HEIGHT - 90 }, image),
 ];
 // player.draw(ctx);
 
@@ -62,7 +63,10 @@ function animate() {
 			// player.frames=0;
 		} else if (collisionBottom(player, platform)) {
 			player.velocity.y = -player.velocity.y;
-		}
+		}else if (collisionSide(player, platform)) {
+      player.velocity.x = -player.velocity.x;
+      console.log("side collision")
+    }
 	});
 	// if(collisionTop(player,platform)){
 	//   player.velocity.y=0;
