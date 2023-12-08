@@ -8,8 +8,8 @@ export class Platform{
         }
         this.image=image;
         // createImage("./assets/images/Plataforma.png");
-        this.width =this.image.width;
-        this.height = this.image.height;
+        this.width =image.width;
+        this.height = image.height;
     }
     draw(ctx){
         // ctx.fillStyle = "red";

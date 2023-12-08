@@ -2,7 +2,7 @@ import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./constants.js";
 import { createImage } from "./utils.js";
 
 export class Background {
-	constructor({ x = 0, y = 0 }) {
+	constructor({ x, y }) {
 		this.position = {
 			x,
 			y,
@@ -14,10 +14,6 @@ export class Background {
 			this.image,
 			this.position.x,
 			this.position.y,
-			CANVAS_WIDTH,
-			CANVAS_HEIGHT,
-			0,
-			0,
 			CANVAS_WIDTH,
 			CANVAS_HEIGHT
 		);

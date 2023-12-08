@@ -7,7 +7,7 @@ export class Player {
     this.frames=0;
     // this.image.src="./assets/images/playerMoveRight.png";
 		this.position={
-      x:100,
+      x:0,
       y:100
     }
 		this.width = 100;
@@ -35,6 +35,7 @@ export class Player {
       this.isAtPlatform=false;
     }else{
       this.velocity.y=0;
+      console.log("fail")
       this.isAtPlatform=true;
     }
   }
