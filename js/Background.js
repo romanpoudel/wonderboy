@@ -9,6 +9,7 @@ export class Background {
 		};
 		this.image = createImage("./assets/images/background1.jpg");
 	}
+
 	draw(ctx) {
 		ctx.drawImage(
 			this.image,
@@ -17,5 +18,17 @@ export class Background {
 			CANVAS_WIDTH,
 			CANVAS_HEIGHT
 		);
+		ctx.drawImage(
+			this.image,
+			this.position.x +CANVAS_WIDTH-5,
+			this.position.y,
+			CANVAS_WIDTH,
+			CANVAS_HEIGHT
+		);
+	}
+	update() {
+		if (this.position.x < -CANVAS_WIDTH) {
+			this.position.x = 0;
+		}
 	}
 }

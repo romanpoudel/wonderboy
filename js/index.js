@@ -11,15 +11,15 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 const ctx = canvas.getContext("2d");
 //create background
-// const background = new Background({ x: 0, y: 0 });
-const backgrounds = [
-	new Background({ x: 0, y: 0 }),
-	new Background({ x: CANVAS_WIDTH, y: 0 }),
-	new Background({ x: CANVAS_WIDTH * 2, y: 0 }),
-	new Background({ x: CANVAS_WIDTH * 3, y: 0 }),
-	new Background({ x: CANVAS_WIDTH * 4, y: 0 }),
-	new Background({ x: CANVAS_WIDTH * 5, y: 0 })
-];
+const background = new Background({ x: 0, y: 0 });
+// const backgrounds = [
+// 	new Background({ x: 0, y: 0 }),
+// 	new Background({ x: CANVAS_WIDTH, y: 0 }),
+// 	new Background({ x: CANVAS_WIDTH * 2, y: 0 }),
+// 	new Background({ x: CANVAS_WIDTH * 3, y: 0 }),
+// 	new Background({ x: CANVAS_WIDTH * 4, y: 0 }),
+// 	new Background({ x: CANVAS_WIDTH * 5, y: 0 })
+// ];
 
 //images
 const image = createImage("./assets/images/base.png");
@@ -48,10 +48,11 @@ const platforms = [
 //animation loop
 function animate() {
 	ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-	backgrounds.forEach((background) => {
-		background.draw(ctx);
-	});
-	// background.draw(ctx);
+	// backgrounds.forEach((background) => {
+	// 	background.draw(ctx);
+	// });
+	background.draw(ctx);
+	background.update();
 	player.update(ctx);
 	// platform.update(ctx);
 	platforms.forEach((platform) => {
@@ -77,11 +78,11 @@ function animate() {
 	//   player.velocity.y=-player.velocity.y;
 	// }
 	//movement
-	backgrounds.forEach((background) => {
+	// backgrounds.forEach((background) => {
 		platforms.forEach((platform) => {
 			movement(player, platform, background);
 		});
-	});
+	// });
 	// movement(player,platform);
 	requestAnimationFrame(animate);
 }
