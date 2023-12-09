@@ -25,6 +25,8 @@ const backgrounds = [
 const image = createImage("./assets/images/base.png");
 const image1 = createImage("./assets/images/Plataforma.png");
 
+//event listener to load inages first
+window.addEventListener("load",()=>{
 //creating a player
 const player = new Player();
 // const platform = new Platform();
@@ -85,3 +87,5 @@ function animate() {
 }
 
 animate();
+
+})

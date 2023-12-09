@@ -16,13 +16,19 @@ export function movement(player, platform, background) {
 	} else if (keys.space && player.isAtPlatform) {
 		player.velocity.y = -20;
 		player.frames = 5;
+	} else if (scrollOffset === 40000) {
+		//end point
+			player.velocity.x = 3;
+			if (player.position.x >= 650) {
+				player.velocity.x = 0;
+		}
 	} else {
 		player.velocity.x = 0;
 		if ((keys.a || keys.leftArrow) && scrollOffset > 0) {
 			scrollOffset -= 5;
 			platform.position.x += 5;
 			background.position.x += 3;
-		} else if ((keys.d || keys.rightArrow) && scrollOffset<40000) {
+		} else if ((keys.d || keys.rightArrow) && scrollOffset < 40000) {
 			scrollOffset += 5;
 			changeFrame(player);
 			console.log("offset:", scrollOffset);
