@@ -24,8 +24,11 @@ export function movement(player, platform, background) {
 		((keys.a || keys.leftArrow) && player.position.x > 100) ||
 		(keys.leftArrow && scrollOffset === 0 && player.position.x > 0)
 	) {
+		player.facing = "left";
+		changeFrame(player);
 		player.velocity.x = -5;
 	} else if ((keys.d || keys.rightArrow) && player.position.x < 400) {
+		player.facing = "right";
 		changeFrame(player);
 		player.velocity.x = +5;
 	} else if (keys.w || keys.upArrow) {
@@ -45,12 +48,14 @@ export function movement(player, platform, background) {
 		player.velocity.x = 0;
 		if ((keys.a || keys.leftArrow) && scrollOffset > 0) {
 			background.lastMovement="left";
+			player.facing = "left";	
+			changeFrame(player);
 			scrollOffset -= 5;
 			platform.position.x += 5;
 			background.position.x += 3;
 		} else if ((keys.d || keys.rightArrow) && scrollOffset < 40000) {
 			background.lastMovement="right";
-			// lastMovement = "right";
+			player.facing = "right";
 			scrollOffset += 5;
 			changeFrame(player);
 			console.log("offset:", scrollOffset);

@@ -25,10 +25,16 @@ export function collisionBottom(rect1, rect2) {
 
 export function collisionSide(rect1, rect2) {
   return (
-    rect1.position.x <= rect2.position.x + rect2.width &&
-    rect1.position.x+rect1.velocity.x < rect2.position.x + rect2.width &&
-    rect1.position.x>=rect2.position.x &&
-    rect1.position.y+rect1.height>=rect2.position.y &&
-    rect1.position.y<=rect2.position.y+rect2.height
+    // Check if the right side of rect1 is colliding with the left side of rect2
+    rect1.position.x + rect1.width + rect1.velocity.x >= rect2.position.x &&
+    rect1.position.x + rect1.width <= rect2.position.x + rect2.width &&
+    rect1.position.y + rect1.height >= rect2.position.y &&
+    rect1.position.y <= rect2.position.y + rect2.height
+  ) || (
+    // Check if the left side of rect1 is colliding with the right side of rect2
+    rect1.position.x + rect1.velocity.x <= rect2.position.x + rect2.width &&
+    rect1.position.x >= rect2.position.x &&
+    rect1.position.y + rect1.height >= rect2.position.y &&
+    rect1.position.y <= rect2.position.y + rect2.height
   );
 }

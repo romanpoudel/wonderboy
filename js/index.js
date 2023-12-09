@@ -5,6 +5,8 @@ import { Platform } from "./Platform.js";
 import { collisionBottom, collisionSide, collisionTop } from "./collision.js";
 import { Background } from "./Background.js";
 import { createImage } from "./utils.js";
+import { Enemy } from "./Enemy.js";
+
 //setup canvas
 const canvas = document.getElementById("canvas");
 canvas.width = CANVAS_WIDTH;
@@ -26,67 +28,72 @@ const image = createImage("./assets/images/base.png");
 const image1 = createImage("./assets/images/Plataforma.png");
 
 //event listener to load inages first
-window.addEventListener("load",()=>{
-//creating a player
-const player = new Player();
-// const platform = new Platform();
-// const platforms = [new Platform({x:200,y:100},image1),new Platform({x:400,y:200},image1),new Platform({x:0,y:CANVAS_HEIGHT-90},image),new Platform({x:image.width,y:CANVAS_HEIGHT-90},image)];
-const platforms = [
-	new Platform({ x: 0, y: CANVAS_HEIGHT - 90 }, image),
-	new Platform({ x: image.width, y: CANVAS_HEIGHT - 90 }, image),
-	new Platform({ x: image.width * 2, y: CANVAS_HEIGHT - 90 }, image),
-	new Platform({ x: image.width * 3, y: CANVAS_HEIGHT - 90 }, image),
-	new Platform({x: image.width * 4  ,y:300},image1),
-	new Platform({x: image.width * 4+200 ,y:200},image1),
-	new Platform({x: image.width * 4+450 ,y:300},image1),
-	new Platform({ x: image.width * 5 , y: CANVAS_HEIGHT - 90 }, image),
-	new Platform({ x: image.width * 6 , y: CANVAS_HEIGHT - 90 }, image),
-	new Platform({ x: image.width * 7 , y: CANVAS_HEIGHT - 90 }, image),
-];
-// player.draw(ctx);
+window.addEventListener("load", () => {
+	//creating a player
+	const player = new Player();
+	//creating enemy
+	const enemy = new Enemy();
+	// const platform = new Platform();
+	// const platforms = [new Platform({x:200,y:100},image1),new Platform({x:400,y:200},image1),new Platform({x:0,y:CANVAS_HEIGHT-90},image),new Platform({x:image.width,y:CANVAS_HEIGHT-90},image)];
+	const platforms = [
+		new Platform({ x: 0, y: CANVAS_HEIGHT - 90 }, image),
+		new Platform({ x: image.width, y: CANVAS_HEIGHT - 90 }, image),
+		new Platform({ x: image.width * 2, y: CANVAS_HEIGHT - 90 }, image),
+		new Platform({ x: image.width * 3, y: CANVAS_HEIGHT - 90 }, image),
+		new Platform({ x: image.width * 4, y: 300 }, image1),
+		new Platform({ x: image.width * 4 + 200, y: 200 }, image1),
+		new Platform({ x: image.width * 4 + 450, y: 300 }, image1),
+		new Platform({ x: image.width * 5, y: CANVAS_HEIGHT - 90 }, image),
+		new Platform({ x: image.width * 6, y: CANVAS_HEIGHT - 90 }, image),
+		new Platform({ x: image.width * 7, y: CANVAS_HEIGHT - 90 }, image),
+	];
+	// player.draw(ctx);
 
-//animation loop
-function animate() {
-	ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-	// backgrounds.forEach((background) => {
-	// 	background.draw(ctx);
-	// });
-	background.draw(ctx);
-	background.update();
-	player.update(ctx);
-	// platform.update(ctx);
-	platforms.forEach((platform) => {
-		platform.update(ctx);
-	});
-	//collision detection
-	platforms.forEach((platform) => {
-		if (collisionTop(player, platform)) {
-			player.velocity.y = 0;
-			player.isAtPlatform = true;
-			// player.frames=0;
-		} else if (collisionBottom(player, platform)) {
-			player.velocity.y = -player.velocity.y;
-		}else if (collisionSide(player, platform)) {
-      player.velocity.x = -player.velocity.x;
-      console.log("side collision")
-    }
-	});
-	// if(collisionTop(player,platform)){
-	//   player.velocity.y=0;
-	//   player.isAtPlatform=true;
-	// }else if(collisionBottom(player,platform)){
-	//   player.velocity.y=-player.velocity.y;
-	// }
-	//movement
-	// backgrounds.forEach((background) => {
+	//animation loop
+	function animate() {
+		ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+		// backgrounds.forEach((background) => {
+		// 	background.draw(ctx);
+		// });
+		background.draw(ctx);
+		background.update();
+		player.update(ctx);
+
+		//enemy
+		enemy.update(ctx);
+		// platform.update(ctx);
+		platforms.forEach((platform) => {
+			platform.update(ctx);
+		});
+		//collision detection
+		platforms.forEach((platform) => {
+			if (collisionTop(player, platform)) {
+				player.velocity.y = 0;
+				player.isAtPlatform = true;
+				// player.frames=0;
+			}
+			if (collisionBottom(player, platform)) {
+				player.velocity.y = -player.velocity.y;
+			}
+			if (collisionSide(player, platform)) {
+				console.log("side collision");
+			}
+		});
+		// if(collisionTop(player,platform)){
+		//   player.velocity.y=0;
+		//   player.isAtPlatform=true;
+		// }else if(collisionBottom(player,platform)){
+		//   player.velocity.y=-player.velocity.y;
+		// }
+		//movement
+		// backgrounds.forEach((background) => {
 		platforms.forEach((platform) => {
 			movement(player, platform, background);
 		});
-	// });
-	// movement(player,platform);
-	requestAnimationFrame(animate);
-}
+		// });
+		// movement(player,platform);
+		requestAnimationFrame(animate);
+	}
 
-animate();
-
-})
+	animate();
+});
