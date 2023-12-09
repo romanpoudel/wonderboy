@@ -31,7 +31,7 @@ export function movement(player, platform, background) {
 	} else if (keys.w || keys.upArrow) {
 		player.velocity.y = -5;
 	} else if (keys.space && player.isAtPlatform) {
-		player.velocity.y = -20;
+		player.velocity.y = -10;
 		player.frames = 5;
 	} else if (scrollOffset === 40000) {
 		//end point
@@ -44,10 +44,13 @@ export function movement(player, platform, background) {
 	} else {
 		player.velocity.x = 0;
 		if ((keys.a || keys.leftArrow) && scrollOffset > 0) {
+			background.lastMovement="left";
 			scrollOffset -= 5;
 			platform.position.x += 5;
 			background.position.x += 3;
 		} else if ((keys.d || keys.rightArrow) && scrollOffset < 40000) {
+			background.lastMovement="right";
+			// lastMovement = "right";
 			scrollOffset += 5;
 			changeFrame(player);
 			console.log("offset:", scrollOffset);
@@ -63,9 +66,4 @@ function changeFrame(player) {
 	} else {
 		player.frames = 0;
 	}
-}
-
-
-function checkpoint(){
-CSSMatrixComponent.drawImage()
 }

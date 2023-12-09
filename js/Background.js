@@ -1,5 +1,6 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from "./constants.js";
 import { createImage } from "./utils.js";
+import { keys } from "./input.js";
 
 export class Background {
 	constructor({ x, y }) {
@@ -8,27 +9,49 @@ export class Background {
 			y,
 		};
 		this.image = createImage("./assets/images/background1.jpg");
+		this._lastMovement = "right";
 	}
 
+	set lastMovement(value) {
+		this._lastMovement = value;
+	}
 	draw(ctx) {
-		ctx.drawImage(
-			this.image,
-			this.position.x,
-			this.position.y,
-			CANVAS_WIDTH,
-			CANVAS_HEIGHT
-		);
-		ctx.drawImage(
-			this.image,
-			this.position.x +CANVAS_WIDTH-5,
-			this.position.y,
-			CANVAS_WIDTH,
-			CANVAS_HEIGHT
-		);
+    // Draw the current image
+    ctx.drawImage(
+        this.image,
+        this.position.x,
+        this.position.y,
+        CANVAS_WIDTH,
+        CANVAS_HEIGHT
+    );
+
+    // Draw the image to the right
+    ctx.drawImage(
+        this.image,
+        this.position.x + CANVAS_WIDTH,
+        this.position.y,
+        CANVAS_WIDTH,
+        CANVAS_HEIGHT
+    );
+
+    // Draw the image to the left
+    ctx.drawImage(
+        this.image,
+        this.position.x - CANVAS_WIDTH,
+        this.position.y,
+        CANVAS_WIDTH,
+        CANVAS_HEIGHT
+    );
 	}
 	update() {
-		if (this.position.x < -CANVAS_WIDTH) {
-			this.position.x = 0;
-		}
-	}
+    if (this._lastMovement === "right") {
+        if (this.position.x <= -CANVAS_WIDTH) {
+            this.position.x = 0;
+        }
+    } else if (this._lastMovement === "left") {
+        if (this.position.x >= CANVAS_WIDTH) {
+            this.position.x = 0;
+        }
+    }
+}
 }
