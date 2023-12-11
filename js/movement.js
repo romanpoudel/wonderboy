@@ -1,25 +1,8 @@
 import { keys } from "./input.js";
-// import { createImage } from "./utils.js";
 
 let scrollOffset = 0;
 
-//checkpoints
-// const checkpoints=[0,1000,2000,3000,4000];
-// let lastCheckpointIndex=-1;
-// const checkpointImage=createImage("./assets/images/checkpoint.png");
-
 export function movement(player, platform, background) {
-//drawing checkpoints
-// for(let i=lastCheckpointIndex+1;i<checkpoints.length;i++){
-// 	if(scrollOffset>=checkpoints[i]){
-// 		console.log("checkpoint");
-// ctx.drawImage(checkpointImage,player.position.x ,player.position.y,20,20);
-// 		lastCheckpointIndex=i;
-// 		break;
-// 	}
-// }
-
-
 	if (
 		((keys.a || keys.leftArrow) && player.position.x > 100) ||
 		(keys.leftArrow && scrollOffset === 0 && player.position.x > 0)

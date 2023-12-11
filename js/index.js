@@ -14,14 +14,6 @@ canvas.height = CANVAS_HEIGHT;
 const ctx = canvas.getContext("2d");
 //create background
 const background = new Background({ x: 0, y: 0 });
-// const backgrounds = [
-// 	new Background({ x: 0, y: 0 }),
-// 	new Background({ x: CANVAS_WIDTH, y: 0 }),
-// 	new Background({ x: CANVAS_WIDTH * 2, y: 0 }),
-// 	new Background({ x: CANVAS_WIDTH * 3, y: 0 }),
-// 	new Background({ x: CANVAS_WIDTH * 4, y: 0 }),
-// 	new Background({ x: CANVAS_WIDTH * 5, y: 0 })
-// ];
 
 //images
 const image = createImage("./assets/images/base.png");
@@ -33,8 +25,6 @@ window.addEventListener("load", () => {
 	const player = new Player();
 	//creating enemy
 	const enemy = new Enemy();
-	// const platform = new Platform();
-	// const platforms = [new Platform({x:200,y:100},image1),new Platform({x:400,y:200},image1),new Platform({x:0,y:CANVAS_HEIGHT-90},image),new Platform({x:image.width,y:CANVAS_HEIGHT-90},image)];
 	const platforms = [
 		new Platform({ x: 0, y: CANVAS_HEIGHT - 90 }, image),
 		new Platform({ x: image.width, y: CANVAS_HEIGHT - 90 }, image),
@@ -47,14 +37,10 @@ window.addEventListener("load", () => {
 		new Platform({ x: image.width * 6, y: CANVAS_HEIGHT - 90 }, image),
 		new Platform({ x: image.width * 7, y: CANVAS_HEIGHT - 90 }, image),
 	];
-	// player.draw(ctx);
 
 	//animation loop
 	function animate() {
 		ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-		// backgrounds.forEach((background) => {
-		// 	background.draw(ctx);
-		// });
 		background.draw(ctx);
 		background.update();
 		player.update(ctx);
@@ -70,28 +56,18 @@ window.addEventListener("load", () => {
 			if (collisionTop(player, platform)) {
 				player.velocity.y = 0;
 				player.isAtPlatform = true;
-				// player.frames=0;
 			}
 			if (collisionBottom(player, platform)) {
 				player.velocity.y = -player.velocity.y;
 			}
 			if (collisionSide(player, platform)) {
 				console.log("side collision");
+				player.velocity.x = 0;
 			}
 		});
-		// if(collisionTop(player,platform)){
-		//   player.velocity.y=0;
-		//   player.isAtPlatform=true;
-		// }else if(collisionBottom(player,platform)){
-		//   player.velocity.y=-player.velocity.y;
-		// }
-		//movement
-		// backgrounds.forEach((background) => {
 		platforms.forEach((platform) => {
 			movement(player, platform, background);
 		});
-		// });
-		// movement(player,platform);
 		requestAnimationFrame(animate);
 	}
 
