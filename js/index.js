@@ -61,8 +61,11 @@ window.addEventListener("load", () => {
 				player.velocity.y = -player.velocity.y;
 			}
 			if (collisionSide(player, platform)) {
-				console.log("side collision");
-				player.velocity.x = 0;
+				if(player.facing === "right"){
+					player.position.x = platform.position.x - player.width;
+				}else if(player.facing === "left"){
+					player.position.x = platform.position.x + platform.width;
+				}
 			}
 		});
 		platforms.forEach((platform) => {
