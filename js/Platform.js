@@ -20,6 +20,7 @@ export class Platform {
 		);
 	}
 	update(ctx) {
+		// console.log("platform",this.position.x)
 		this.draw(ctx);
 	}
 }

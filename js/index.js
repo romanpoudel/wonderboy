@@ -11,7 +11,7 @@ import { Enemy } from "./Enemy.js";
 const canvas = document.getElementById("canvas");
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
-const ctx = canvas.getContext("2d");
+export const ctx = canvas.getContext("2d");
 //create background
 const background = new Background({ x: 0, y: 0 });
 
@@ -61,15 +61,15 @@ window.addEventListener("load", () => {
 				player.velocity.y = -player.velocity.y;
 			}
 			if (collisionSide(player, platform)) {
-				if(player.facing === "right"){
+				if (player.facing === "right") {
 					player.position.x = platform.position.x - player.width;
-				}else if(player.facing === "left"){
+				} else if (player.facing === "left") {
 					player.position.x = platform.position.x + platform.width;
 				}
 			}
 		});
 		platforms.forEach((platform) => {
-			movement(player, platform, background);
+			movement(player, platform, background, ctx);
 		});
 		requestAnimationFrame(animate);
 	}

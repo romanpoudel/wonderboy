@@ -44,6 +44,7 @@ export class Background {
 		);
 	}
 	update() {
+		// console.log("background",this.position.x)
 		if (this._lastMovement === "right") {
 			if (this.position.x <= -CANVAS_WIDTH) {
 				this.position.x = 0;

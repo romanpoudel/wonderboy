@@ -3,6 +3,7 @@ import { createImage } from "./utils.js";
 
 export class Player {
 	constructor() {
+		this.speed=5;
 		this.rightSprite = createImage("./assets/images/playerMoveRight1.png");
 		this.leftSprite = createImage("./assets/images/playerMoveLeft.png");
 		this.frames = 0;

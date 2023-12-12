@@ -28,6 +28,6 @@ export class Enemy {
 	}
 	update(ctx) {
 		this.draw(ctx);
-		this.x -= 2;
+		this.x -= 5;
 	}
 }
