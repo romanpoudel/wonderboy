@@ -17,7 +17,7 @@ export class Fire extends Enemy {
 			this.image,
 			this.frame * this.frameWidth,
 			0,
-			this.frameWidth,
+			this.frameWidth-25,
 			this.image.height,
 			this.position.x,
 			this.position.y,

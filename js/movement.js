@@ -11,6 +11,10 @@ import { Stone } from "./Enemy/Stone.js";
 import { Fire } from "./Enemy/Fire.js";
 import { Snake } from "./Enemy/Snake.js";
 import { Bird } from "./Enemy/Bird.js";
+import { Fruit } from "./Fruit.js";
+
+//fruits spawn
+let fruits = [new Fruit(), new Fruit(), new Fruit(), new Fruit(), new Fruit()];
 
 //obstacles
 const stones = [
@@ -26,17 +30,16 @@ const fires = [
 	new Fire({ x: CANVAS_WIDTH * 5 + 200, y: CANVAS_HEIGHT - 150 }),
 ];
 const snakes = [
-	new Snake({ x: 1300, y:CANVAS_HEIGHT - 150 }),
-	new Snake({ x: CANVAS_WIDTH * 5-200, y: CANVAS_HEIGHT - 150 })
+	new Snake({ x: 1300, y: CANVAS_HEIGHT - 150 }),
+	new Snake({ x: CANVAS_WIDTH * 5 - 200, y: CANVAS_HEIGHT - 150 }),
 ];
 
 //spawn birds every 4 seconds
-let birds = [
-];
+let birds = [];
 setInterval(() => {
-	birds.push(new Bird({ x: CANVAS_WIDTH , y: CANVAS_HEIGHT - 260 }));
+	birds.push(new Bird({ x: CANVAS_WIDTH, y: CANVAS_HEIGHT - 260 }));
 	//remove birds out of screen
-	birds=birds.filter((bird) => !bird.isMarkedForDeletion);
+	birds = birds.filter((bird) => !bird.isMarkedForDeletion);
 }, 4000);
 //checkpoints
 const checkpoints = [
@@ -51,7 +54,7 @@ let scrollOffset = 0;
 
 export function movement(player, platform, background, ctx) {
 	if (
-		((keys.a || keys.leftArrow) && player.position.x > 100) ||
+		((keys.a || keys.leftArrow) && player.position.x > 0) ||
 		(keys.leftArrow && scrollOffset === 0 && player.position.x > 0)
 	) {
 		player.facing = "left";
@@ -76,29 +79,33 @@ export function movement(player, platform, background, ctx) {
 		}
 	} else {
 		player.velocity.x = 0;
-		if ((keys.a || keys.leftArrow) && scrollOffset > 0) {
-			background.lastMovement = "left";
-			player.facing = "left";
-			changeFrame(player);
-			scrollOffset -= SPEED;
-			platform.position.x += SPEED;
-			background.position.x += SPEED * BGMULTIPLLIER * 0.66;
-			checkpoints.forEach((checkpoint) => {
-				checkpoint.position.x += SPEED * BGMULTIPLLIER;
-			});
-			stones.forEach((stone) => {
-				stone.position.x += SPEED * BGMULTIPLLIER;
-			});
-			fires.forEach((fire) => {
-				fire.position.x += SPEED * BGMULTIPLLIER;
-			});
-			snakes.forEach((snake) => {
-				snake.position.x += SPEED * BGMULTIPLLIER;
-			});
-			birds.forEach((bird) => {
-				bird.position.x += SPEED * BGMULTIPLLIER;
-			});
-		} else if (keys.d || keys.rightArrow) {
+		// if ((keys.a || keys.leftArrow) && scrollOffset > 0) {
+		// 	background.lastMovement = "left";
+		// 	player.facing = "left";
+		// 	changeFrame(player);
+		// 	scrollOffset -= SPEED;
+		// 	platform.position.x += SPEED;
+		// 	background.position.x += SPEED * BGMULTIPLLIER * 0.66;
+		// 	checkpoints.forEach((checkpoint) => {
+		// 		checkpoint.position.x += SPEED * BGMULTIPLLIER;
+		// 	});
+		// 	stones.forEach((stone) => {
+		// 		stone.position.x += SPEED * BGMULTIPLLIER;
+		// 	});
+		// 	fires.forEach((fire) => {
+		// 		fire.position.x += SPEED * BGMULTIPLLIER;
+		// 	});
+		// 	snakes.forEach((snake) => {
+		// 		snake.position.x += SPEED * BGMULTIPLLIER;
+		// 	});
+		// 	birds.forEach((bird) => {
+		// 		bird.position.x += SPEED * BGMULTIPLLIER;
+		// 	});
+		// 	fruits.forEach((fruit) => {
+		// 		fruit.position.x += SPEED * BGMULTIPLLIER;
+		// 	});
+		// } else
+		if (keys.d || keys.rightArrow) {
 			background.lastMovement = "right";
 			player.facing = "right";
 			scrollOffset += SPEED;
@@ -120,6 +127,9 @@ export function movement(player, platform, background, ctx) {
 			birds.forEach((bird) => {
 				bird.position.x -= SPEED * BGMULTIPLLIER;
 			});
+			fruits.forEach((fruit) => {
+				fruit.position.x -= SPEED * BGMULTIPLLIER;
+			});
 		}
 	}
 	checkpoints.forEach((checkpoint) => {
@@ -127,26 +137,32 @@ export function movement(player, platform, background, ctx) {
 	});
 	stones.forEach((stone) => {
 		stone.draw(ctx);
-		if(stone.collision(player)){
+		if (stone.collision(player)) {
 			console.log("stone collision");
 		}
 	});
 	fires.forEach((fire) => {
 		fire.update(ctx);
-		if(fire.collision(player)){
+		if (fire.collision(player)) {
 			console.log("fire collision");
 		}
 	});
 	snakes.forEach((snake) => {
 		snake.update(ctx);
-		if(snake.collision(player)){
+		if (snake.collision(player)) {
 			console.log("snake collision");
 		}
 	});
 	birds.forEach((bird) => {
 		bird.update(ctx);
-		if(bird.collision(player)){
+		if (bird.collision(player)) {
 			console.log("bird collision");
+		}
+	});
+	fruits.forEach((fruit) => {
+		fruit.draw(ctx);
+		if (fruit.collision(player)) {
+			console.log("fruit collision");
 		}
 	});
 }
