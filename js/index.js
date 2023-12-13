@@ -5,7 +5,8 @@ import { Platform } from "./Platform.js";
 import { collisionBottom, collisionSide, collisionTop } from "./collision.js";
 import { Background } from "./Background.js";
 import { createImage } from "./utils.js";
-import { Enemy } from "./Enemy.js";
+import { Enemy } from "./Enemy/Enemy.js";
+
 
 //setup canvas
 const canvas = document.getElementById("canvas");
@@ -23,8 +24,7 @@ const image1 = createImage("./assets/images/Plataforma.png");
 window.addEventListener("load", () => {
 	//creating a player
 	const player = new Player();
-	//creating enemy
-	const enemy = new Enemy();
+
 	const platforms = [
 		new Platform({ x: 0, y: CANVAS_HEIGHT - 90 }, image),
 		new Platform({ x: image.width, y: CANVAS_HEIGHT - 90 }, image),
@@ -43,10 +43,11 @@ window.addEventListener("load", () => {
 		ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 		background.draw(ctx);
 		background.update();
+		platforms.forEach((platform) => {
+			movement(player, platform, background, ctx);
+		});
 		player.update(ctx);
 
-		//enemy
-		enemy.update(ctx);
 		// platform.update(ctx);
 		platforms.forEach((platform) => {
 			platform.update(ctx);
@@ -68,9 +69,7 @@ window.addEventListener("load", () => {
 				}
 			}
 		});
-		platforms.forEach((platform) => {
-			movement(player, platform, background, ctx);
-		});
+	
 		requestAnimationFrame(animate);
 	}
 
