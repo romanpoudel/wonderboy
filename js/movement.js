@@ -26,15 +26,17 @@ const fires = [
 	new Fire({ x: CANVAS_WIDTH * 5 + 200, y: CANVAS_HEIGHT - 90 }),
 ];
 const snakes = [
-	new Snake({ x: 1300, y:CANVAS_HEIGHT - 170 }),
-	new Snake({ x: CANVAS_WIDTH * 5-200, y: CANVAS_HEIGHT - 170 })
+	new Snake({ x: 1300, y:CANVAS_HEIGHT - 150 }),
+	new Snake({ x: CANVAS_WIDTH * 5-200, y: CANVAS_HEIGHT - 150 })
 ];
 
 //spawn birds every 4 seconds
-const birds = [
+let birds = [
 ];
 setInterval(() => {
 	birds.push(new Bird({ x: CANVAS_WIDTH , y: CANVAS_HEIGHT - 260 }));
+	//remove birds out of screen
+	birds=birds.filter((bird) => !bird.isMarkedForDeletion);
 }, 4000);
 //checkpoints
 const checkpoints = [

@@ -16,10 +16,10 @@ export class Fire extends Enemy {
 		};
 		this.image = createImage("./assets/images/obstacles/fireSprite.png");
 
-		this.height = 90;
+		this.width = 60;
+		this.height = 60;
 		this.frameWidth = 124;
 		this.frame = 0;
-		this.width = 90;
 		this.timeInterval = 400;
 		this.time = 0;
 	}
