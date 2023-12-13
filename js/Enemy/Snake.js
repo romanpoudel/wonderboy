@@ -2,17 +2,13 @@ import { Enemy } from "./Enemy.js";
 import { createImage } from "../utils.js";
 
 export class Snake extends Enemy {
-	constructor({ x, y }) {
-		super();
-		this.position = {
-			x,
-			y,
-		};
+	constructor(position) {
+		super(position);
 		this.image = createImage("./assets/images/obstacles/snakeSprite.png");
-		this.frameWidth = 95;
 		this.width = 60;
 		this.height = 60;
 		this.frame = 0;
+		this.frameWidth = 95;
 		this.timeInterval = 400;
 		this.time = 0;
 	}

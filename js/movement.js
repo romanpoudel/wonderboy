@@ -21,9 +21,9 @@ const stones = [
 ];
 
 const fires = [
-	new Fire({ x: 800, y: CANVAS_HEIGHT - 90 }),
-	new Fire({ x: CANVAS_WIDTH * 2 + 200, y: CANVAS_HEIGHT - 90 }),
-	new Fire({ x: CANVAS_WIDTH * 5 + 200, y: CANVAS_HEIGHT - 90 }),
+	new Fire({ x: 800, y: CANVAS_HEIGHT - 150 }),
+	new Fire({ x: CANVAS_WIDTH * 2 + 200, y: CANVAS_HEIGHT - 150 }),
+	new Fire({ x: CANVAS_WIDTH * 5 + 200, y: CANVAS_HEIGHT - 150 }),
 ];
 const snakes = [
 	new Snake({ x: 1300, y:CANVAS_HEIGHT - 150 }),
@@ -127,15 +127,27 @@ export function movement(player, platform, background, ctx) {
 	});
 	stones.forEach((stone) => {
 		stone.draw(ctx);
+		if(stone.collision(player)){
+			console.log("stone collision");
+		}
 	});
 	fires.forEach((fire) => {
 		fire.update(ctx);
+		if(fire.collision(player)){
+			console.log("fire collision");
+		}
 	});
 	snakes.forEach((snake) => {
 		snake.update(ctx);
+		if(snake.collision(player)){
+			console.log("snake collision");
+		}
 	});
 	birds.forEach((bird) => {
 		bird.update(ctx);
+		if(bird.collision(player)){
+			console.log("bird collision");
+		}
 	});
 }
 

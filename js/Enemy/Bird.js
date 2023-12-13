@@ -3,17 +3,13 @@ import { createImage } from "../utils.js";
 import { CANVAS_WIDTH } from "../constants.js";
 
 export class Bird extends Enemy {
-	constructor({ x, y }) {
-		super();
-		this.position = {
-			x,
-			y,
-		};
+	constructor(position) {
+		super(position);
 		this.image = createImage("./assets/images/obstacles/birdSprite.png");
 		this.frameWidth = 240;
 		this.sy = 942;
-		this.width = 80;
-		this.height = 80;
+		this.width = 60;
+		this.height = 60;
 		this.frame = 0;
 		this.timeInterval = 100;
 		this.time = 0;
