@@ -12,6 +12,8 @@ import { Fire } from "./Enemy/Fire.js";
 import { Snake } from "./Enemy/Snake.js";
 import { Bird } from "./Enemy/Bird.js";
 import { Fruit } from "./Fruit.js";
+import {gameSound,fruitSound, jumpSound,deathSound} from "./sound.js";
+
 
 //fruits spawn
 let fruits = [new Fruit(), new Fruit(), new Fruit(), new Fruit(), new Fruit()];
@@ -64,11 +66,10 @@ export function movement(player, platform, background, ctx) {
 		player.facing = "right";
 		changeFrame(player);
 		player.velocity.x = +SPEED;
-	} else if (keys.w || keys.upArrow) {
-		player.velocity.y = -SPEED;
-	} else if (keys.space && player.isAtPlatform) {
+	}  else if (keys.space && player.isAtPlatform) {
 		player.velocity.y = -12;
 		player.frames = 5;
+		jumpSound.play();
 	} else if (scrollOffset === 48400) {
 		//end point
 		player.velocity.x = 3;
@@ -79,32 +80,6 @@ export function movement(player, platform, background, ctx) {
 		}
 	} else {
 		player.velocity.x = 0;
-		// if ((keys.a || keys.leftArrow) && scrollOffset > 0) {
-		// 	background.lastMovement = "left";
-		// 	player.facing = "left";
-		// 	changeFrame(player);
-		// 	scrollOffset -= SPEED;
-		// 	platform.position.x += SPEED;
-		// 	background.position.x += SPEED * BGMULTIPLLIER * 0.66;
-		// 	checkpoints.forEach((checkpoint) => {
-		// 		checkpoint.position.x += SPEED * BGMULTIPLLIER;
-		// 	});
-		// 	stones.forEach((stone) => {
-		// 		stone.position.x += SPEED * BGMULTIPLLIER;
-		// 	});
-		// 	fires.forEach((fire) => {
-		// 		fire.position.x += SPEED * BGMULTIPLLIER;
-		// 	});
-		// 	snakes.forEach((snake) => {
-		// 		snake.position.x += SPEED * BGMULTIPLLIER;
-		// 	});
-		// 	birds.forEach((bird) => {
-		// 		bird.position.x += SPEED * BGMULTIPLLIER;
-		// 	});
-		// 	fruits.forEach((fruit) => {
-		// 		fruit.position.x += SPEED * BGMULTIPLLIER;
-		// 	});
-		// } else
 		if (keys.d || keys.rightArrow) {
 			background.lastMovement = "right";
 			player.facing = "right";
@@ -145,24 +120,28 @@ export function movement(player, platform, background, ctx) {
 		fire.update(ctx);
 		if (fire.collision(player)) {
 			console.log("fire collision");
+			deathSound.play();
 		}
 	});
 	snakes.forEach((snake) => {
 		snake.update(ctx);
 		if (snake.collision(player)) {
 			console.log("snake collision");
+			deathSound.play();
 		}
 	});
 	birds.forEach((bird) => {
 		bird.update(ctx);
 		if (bird.collision(player)) {
 			console.log("bird collision");
+			deathSound.play();
 		}
 	});
 	fruits.forEach((fruit) => {
 		fruit.draw(ctx);
 		if (fruit.collision(player)) {
 			console.log("fruit collision");
+			fruitSound.play();
 		}
 	});
 }
@@ -173,4 +152,4 @@ function changeFrame(player) {
 	} else {
 		player.frames = 0;
 	}
-}
+}  

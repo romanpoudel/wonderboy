@@ -10,3 +10,8 @@ export function createImage(src) {
 export function randomNum(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 }
+
+// Check if the mouse is inside the button area
+export function isMouseInsideButton(x, y,buttonx, buttony, size) {
+	return x > buttonx && x < buttonx+size && y > buttony && y < buttony+size;
+}

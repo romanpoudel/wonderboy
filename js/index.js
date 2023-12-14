@@ -4,9 +4,9 @@ import { movement } from "./movement.js";
 import { Platform } from "./Platform.js";
 import { collisionBottom, collisionSide, collisionTop } from "./collision.js";
 import { Background } from "./Background.js";
-import { createImage } from "./utils.js";
+import { createImage, isMouseInsideButton } from "./utils.js";
 import { Enemy } from "./Enemy/Enemy.js";
-
+import { gameSound } from "./sound.js";
 
 //setup canvas
 const canvas = document.getElementById("canvas");
@@ -19,6 +19,12 @@ const background = new Background({ x: 0, y: 0 });
 //images
 const image = createImage("./assets/images/base.png");
 const image1 = createImage("./assets/images/Plataforma.png");
+
+//sound functionality
+let sound = false;
+let canToggle = true; // Flag to prevent multiple toggles in the same frame
+//play before dom loads
+// gameSound.play();
 
 //event listener to load inages first
 window.addEventListener("load", () => {
@@ -43,6 +49,41 @@ window.addEventListener("load", () => {
 		ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 		background.draw(ctx);
 		background.update();
+		const speaker = sound
+			? createImage("./assets/images/unmute.png")
+			: createImage("./assets/images/mute.png");
+		//start game sound
+		if (sound) {
+			gameSound.play().catch((err) => {
+				console.log(err);
+			});
+		} else {
+			gameSound.pause();
+		}
+		ctx.drawImage(speaker, CANVAS_WIDTH - 50, 5, 40, 40);
+
+		// Handle mouse click event
+		canvas.addEventListener("click", function (event) {
+			if (!canToggle) {
+				return; // Exit the function if the button can't be toggled
+			}
+			var mouseX = event.offsetX;
+			var mouseY = event.offsetY;
+
+			const buttonx = CANVAS_WIDTH - 50;
+			const buttony = 5;
+			const size = 40;
+			if (isMouseInsideButton(mouseX, mouseY, buttonx, buttony, size)) {
+				sound = !sound;
+
+				canToggle = false; // Disable further toggles in the current frame
+
+				// Schedule the reset of the flag after a short delay (e.g., 500ms)
+				setTimeout(() => {
+					canToggle = true;
+				}, 500);
+			}
+		});
 		platforms.forEach((platform) => {
 			movement(player, platform, background, ctx);
 		});
@@ -69,7 +110,7 @@ window.addEventListener("load", () => {
 				}
 			}
 		});
-	
+
 		requestAnimationFrame(animate);
 	}
 
