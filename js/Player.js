@@ -19,6 +19,8 @@ export class Player {
 		};
 		this.isAtPlatform = false;
 		this.facing = "right";
+		this.score = 0;
+		this.isCollidingWithStone = false;
 	}
 
 	draw(ctx) {

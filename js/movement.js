@@ -12,11 +12,11 @@ import { Fire } from "./Enemy/Fire.js";
 import { Snake } from "./Enemy/Snake.js";
 import { Bird } from "./Enemy/Bird.js";
 import { Fruit } from "./Fruit.js";
-import {gameSound,fruitSound, jumpSound,deathSound} from "./sound.js";
-
+import { gameSound, fruitSound, jumpSound, deathSound } from "./sound.js";
 
 //fruits spawn
 let fruits = [new Fruit(), new Fruit(), new Fruit(), new Fruit(), new Fruit()];
+let fruitScore = 0;
 
 //slown down frame change for player
 let frameChangeCounter = 0;
@@ -58,6 +58,7 @@ const checkpoints = [
 let scrollOffset = 0;
 
 export function movement(player, platform, background, ctx) {
+	player.score = Math.floor(scrollOffset * 0.02) + fruitScore;
 	if (
 		((keys.a || keys.leftArrow) && player.position.x > 0) ||
 		(keys.leftArrow && scrollOffset === 0 && player.position.x > 0)
@@ -69,7 +70,7 @@ export function movement(player, platform, background, ctx) {
 		player.facing = "right";
 		changeFrame(player);
 		player.velocity.x = +SPEED;
-	}  else if (keys.space && player.isAtPlatform) {
+	} else if (keys.space && player.isAtPlatform) {
 		player.velocity.y = -12;
 		player.frames = 5;
 		jumpSound.play();
@@ -86,28 +87,31 @@ export function movement(player, platform, background, ctx) {
 		if (keys.d || keys.rightArrow) {
 			background.lastMovement = "right";
 			player.facing = "right";
-			scrollOffset += SPEED;
 			changeFrame(player);
-			platform.position.x -= SPEED;
-			background.position.x -= SPEED * BGMULTIPLLIER * 0.66;
-			checkpoints.forEach((checkpoint) => {
-				checkpoint.position.x -= SPEED * BGMULTIPLLIER;
-			});
-			stones.forEach((stone) => {
-				stone.position.x -= SPEED * BGMULTIPLLIER;
-			});
-			fires.forEach((fire) => {
-				fire.position.x -= SPEED * BGMULTIPLLIER;
-			});
-			snakes.forEach((snake) => {
-				snake.position.x -= SPEED * BGMULTIPLLIER;
-			});
-			birds.forEach((bird) => {
-				bird.position.x -= SPEED * BGMULTIPLLIER;
-			});
-			fruits.forEach((fruit) => {
-				fruit.position.x -= SPEED * BGMULTIPLLIER;
-			});
+			if (!player.isCollidingWithStone) {
+				scrollOffset += SPEED;
+				platform.position.x -= SPEED;
+				background.position.x -= SPEED * BGMULTIPLLIER * 0.66;
+
+				checkpoints.forEach((checkpoint) => {
+					checkpoint.position.x -= SPEED * BGMULTIPLLIER;
+				});
+				stones.forEach((stone) => {
+					stone.position.x -= SPEED * BGMULTIPLLIER;
+				});
+				fires.forEach((fire) => {
+					fire.position.x -= SPEED * BGMULTIPLLIER;
+				});
+				snakes.forEach((snake) => {
+					snake.position.x -= SPEED * BGMULTIPLLIER;
+				});
+				birds.forEach((bird) => {
+					bird.position.x -= SPEED * BGMULTIPLLIER;
+				});
+				fruits.forEach((fruit) => {
+					fruit.position.x -= SPEED * BGMULTIPLLIER;
+				});
+			}
 		}
 	}
 	checkpoints.forEach((checkpoint) => {
@@ -115,8 +119,19 @@ export function movement(player, platform, background, ctx) {
 	});
 	stones.forEach((stone) => {
 		stone.draw(ctx);
+
 		if (stone.collision(player)) {
 			console.log("stone collision");
+			player.isCollidingWithStone = true;
+			if ( player.position.x < stone.position.x) {
+				player.position.x = stone.position.x - player.width;
+			} else if ( player.position.x > stone.position.x) {
+				player.position.x = stone.position.x + stone.width+1;//added 1 as last stone was stoping player
+			}else{
+				player.position.x = stone.position.x + stone.width;
+			}
+		}else{
+			player.isCollidingWithStone = false;
 		}
 	});
 	fires.forEach((fire) => {
@@ -140,24 +155,26 @@ export function movement(player, platform, background, ctx) {
 			deathSound.play();
 		}
 	});
-	fruits.forEach((fruit) => {
+	fruits.forEach((fruit, i) => {
 		fruit.draw(ctx);
 		if (fruit.collision(player)) {
 			console.log("fruit collision");
 			fruitSound.play();
+			fruitScore += 100;
+			fruits.splice(i, 1);
 		}
 	});
 }
 
 function changeFrame(player) {
-	if(frameChangeCounter<40){
+	if (frameChangeCounter < 40) {
 		frameChangeCounter++;
 		return;
 	}
-	if (player.frames < 6) {
+	if (player.frames <5) {
 		player.frames++;
 	} else {
 		player.frames = 0;
 	}
-	frameChangeCounter=0;
-}  
+	frameChangeCounter = 0;
+}
