@@ -18,6 +18,9 @@ import {gameSound,fruitSound, jumpSound,deathSound} from "./sound.js";
 //fruits spawn
 let fruits = [new Fruit(), new Fruit(), new Fruit(), new Fruit(), new Fruit()];
 
+//slown down frame change for player
+let frameChangeCounter = 0;
+
 //obstacles
 const stones = [
 	new Stone({ x: 500, y: CANVAS_HEIGHT - 130 }),
@@ -147,9 +150,14 @@ export function movement(player, platform, background, ctx) {
 }
 
 function changeFrame(player) {
+	if(frameChangeCounter<40){
+		frameChangeCounter++;
+		return;
+	}
 	if (player.frames < 6) {
 		player.frames++;
 	} else {
 		player.frames = 0;
 	}
+	frameChangeCounter=0;
 }  
