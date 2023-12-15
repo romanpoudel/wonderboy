@@ -5,8 +5,8 @@ export class Snake extends Enemy {
 	constructor(position) {
 		super(position);
 		this.image = createImage("./assets/images/obstacles/snakeSprite.png");
-		this.width = 60;
-		this.height = 60;
+		this.width = 40;
+		this.height = 40;
 		this.frame = 0;
 		this.frameWidth = 95;
 		this.timeInterval = 400;

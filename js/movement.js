@@ -13,6 +13,7 @@ import { Snake } from "./Enemy/Snake.js";
 import { Bird } from "./Enemy/Bird.js";
 import { Fruit } from "./Fruit.js";
 import { gameSound, fruitSound, jumpSound, deathSound } from "./sound.js";
+import { endGame } from "./index.js";
 
 //fruits spawn
 let fruits = [new Fruit(), new Fruit(), new Fruit(), new Fruit(), new Fruit()];
@@ -31,12 +32,12 @@ const stones = [
 
 const fires = [
 	new Fire({ x: 800, y: CANVAS_HEIGHT - 150 }),
-	new Fire({ x: CANVAS_WIDTH * 2 + 200, y: CANVAS_HEIGHT - 150 }),
+	new Fire({ x: CANVAS_WIDTH * 2 + 500, y: CANVAS_HEIGHT - 150 }),
 	new Fire({ x: CANVAS_WIDTH * 5 + 200, y: CANVAS_HEIGHT - 150 }),
 ];
 const snakes = [
-	new Snake({ x: 1300, y: CANVAS_HEIGHT - 150 }),
-	new Snake({ x: CANVAS_WIDTH * 5 - 200, y: CANVAS_HEIGHT - 150 }),
+	new Snake({ x: 1300, y: CANVAS_HEIGHT - 130 }),
+	new Snake({ x: CANVAS_WIDTH * 5 - 200, y: CANVAS_HEIGHT - 130 }),
 ];
 
 //spawn birds every 4 seconds
@@ -45,7 +46,7 @@ setInterval(() => {
 	birds.push(new Bird({ x: CANVAS_WIDTH, y: CANVAS_HEIGHT - 260 }));
 	//remove birds out of screen
 	birds = birds.filter((bird) => !bird.isMarkedForDeletion);
-}, 4000);
+}, 9000);
 //checkpoints
 const checkpoints = [
 	new CheckPoint({ x: 0, y: CANVAS_HEIGHT - 140 }, 0),
@@ -59,6 +60,50 @@ let scrollOffset = 0;
 
 export function movement(player, platform, background, ctx) {
 	player.score = Math.floor(scrollOffset * 0.02) + fruitScore;
+	stones.forEach((stone) => {
+		stone.draw(ctx);
+		if (stone.collision(player)) {
+			player.isCollidingWithStone = true;
+			if (player.position.x < stone.position.x) {
+				player.position.x = stone.position.x - player.width;
+			} else if (player.position.x > stone.position.x) {
+				player.position.x = stone.position.x + stone.width + 1; //added 1 as last stone was stoping player
+			} else {
+				player.position.x = stone.position.x + stone.width;
+			}
+		} else {
+			player.isCollidingWithStone = false;
+		}
+	});
+	fires.forEach((fire) => {
+		fire.update(ctx);
+		if (fire.collision(player)) {
+			deathSound.play();
+			endGame();
+		}
+	});
+	snakes.forEach((snake) => {
+		snake.update(ctx);
+		if (snake.collision(player)) {
+			deathSound.play();
+			endGame();
+		}
+	});
+	birds.forEach((bird) => {
+		bird.update(ctx);
+		if (bird.collision(player)) {
+			deathSound.play();
+			endGame();
+		}
+	});
+	fruits.forEach((fruit, i) => {
+		fruit.draw(ctx);
+		if (fruit.collision(player)) {
+			fruitSound.play();
+			fruitScore += 100;
+			fruits.splice(i, 1);
+		}
+	});
 	if (
 		((keys.a || keys.leftArrow) && player.position.x > 0) ||
 		(keys.leftArrow && scrollOffset === 0 && player.position.x > 0)
@@ -66,7 +111,7 @@ export function movement(player, platform, background, ctx) {
 		player.facing = "left";
 		changeFrame(player);
 		player.velocity.x = -SPEED;
-	} else if ((keys.d || keys.rightArrow) && player.position.x < 400) {
+	} else if ((keys.d || keys.rightArrow) && player.position.x < 430) {
 		player.facing = "right";
 		changeFrame(player);
 		player.velocity.x = +SPEED;
@@ -92,7 +137,6 @@ export function movement(player, platform, background, ctx) {
 				scrollOffset += SPEED;
 				platform.position.x -= SPEED;
 				background.position.x -= SPEED * BGMULTIPLLIER * 0.66;
-
 				checkpoints.forEach((checkpoint) => {
 					checkpoint.position.x -= SPEED * BGMULTIPLLIER;
 				});
@@ -117,53 +161,7 @@ export function movement(player, platform, background, ctx) {
 	checkpoints.forEach((checkpoint) => {
 		checkpoint.draw(ctx);
 	});
-	stones.forEach((stone) => {
-		stone.draw(ctx);
 
-		if (stone.collision(player)) {
-			console.log("stone collision");
-			player.isCollidingWithStone = true;
-			if ( player.position.x < stone.position.x) {
-				player.position.x = stone.position.x - player.width;
-			} else if ( player.position.x > stone.position.x) {
-				player.position.x = stone.position.x + stone.width+1;//added 1 as last stone was stoping player
-			}else{
-				player.position.x = stone.position.x + stone.width;
-			}
-		}else{
-			player.isCollidingWithStone = false;
-		}
-	});
-	fires.forEach((fire) => {
-		fire.update(ctx);
-		if (fire.collision(player)) {
-			console.log("fire collision");
-			deathSound.play();
-		}
-	});
-	snakes.forEach((snake) => {
-		snake.update(ctx);
-		if (snake.collision(player)) {
-			console.log("snake collision");
-			deathSound.play();
-		}
-	});
-	birds.forEach((bird) => {
-		bird.update(ctx);
-		if (bird.collision(player)) {
-			console.log("bird collision");
-			deathSound.play();
-		}
-	});
-	fruits.forEach((fruit, i) => {
-		fruit.draw(ctx);
-		if (fruit.collision(player)) {
-			console.log("fruit collision");
-			fruitSound.play();
-			fruitScore += 100;
-			fruits.splice(i, 1);
-		}
-	});
 }
 
 function changeFrame(player) {
@@ -171,7 +169,7 @@ function changeFrame(player) {
 		frameChangeCounter++;
 		return;
 	}
-	if (player.frames <5) {
+	if (player.frames < 5) {
 		player.frames++;
 	} else {
 		player.frames = 0;

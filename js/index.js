@@ -4,9 +4,10 @@ import { movement } from "./movement.js";
 import { Platform } from "./Platform.js";
 import { collisionBottom, collisionSide, collisionTop } from "./collision.js";
 import { Background } from "./Background.js";
-import { createImage, isMouseInsideButton, togglePause } from "./utils.js";
+import { createImage, isMouseInsideButton } from "./utils.js";
 import { Enemy } from "./Enemy/Enemy.js";
 import { gameSound } from "./sound.js";
+import { drawMenu } from "./menu.js";
 
 //setup canvas
 const canvas = document.getElementById("canvas");
@@ -23,6 +24,15 @@ const image1 = createImage("./assets/images/Plataforma.png");
 //sound functionality
 let sound = false;
 let canToggle = true; // Flag to prevent multiple toggles in the same frame
+
+//game ending value
+let hasGameEnded = false;
+let isGamePaused = false;
+
+export function endGame() {
+	hasGameEnded = true;
+	drawMenu(ctx);
+}
 
 //event listener to load inages first
 window.addEventListener("load", () => {
@@ -42,10 +52,6 @@ window.addEventListener("load", () => {
 		new Platform({ x: image.width * 7, y: CANVAS_HEIGHT - 90 }, image),
 	];
 
-	//game ending value
-	let hasGameEnded = false;
-	let isGamePaused = false;
-
 	//animation loop
 	function animate() {
 		if (!hasGameEnded && !isGamePaused) {
@@ -53,7 +59,9 @@ window.addEventListener("load", () => {
 			background.draw(ctx);
 			background.update();
 			//play pause
-			const pause=isGamePaused?createImage("./assets/images/play.png"):createImage("./assets/images/pause.png");
+			const pause = isGamePaused
+				? createImage("./assets/images/play.png")
+				: createImage("./assets/images/pause.png");
 			ctx.drawImage(pause, CANVAS_WIDTH - 100, 5, 40, 40);
 			const speaker = sound
 				? createImage("./assets/images/unmute.png")

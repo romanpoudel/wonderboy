@@ -37,7 +37,7 @@ export class Bird extends Enemy {
 		this.time++;
 		if (this.time > this.timeInterval) {
 			this.frame++;
-			if (this.frame > 5) {
+			if (this.frame > 4) {
 				this.frame = 0;
 			}
 			this.time = 0;
