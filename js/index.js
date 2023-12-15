@@ -7,10 +7,11 @@ import { Background } from "./Background.js";
 import { createImage, isMouseInsideButton } from "./utils.js";
 import { Enemy } from "./Enemy/Enemy.js";
 import { gameSound } from "./sound.js";
-import { drawMenu } from "./menu.js";
 
 //setup canvas
 const canvas = document.getElementById("canvas");
+const menu = document.querySelector(".menu");
+menu.style.display = "none";
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 export const ctx = canvas.getContext("2d");
@@ -28,10 +29,11 @@ let canToggle = true; // Flag to prevent multiple toggles in the same frame
 //game ending value
 let hasGameEnded = false;
 let isGamePaused = false;
+let playBtn = false;
 
 export function endGame() {
 	hasGameEnded = true;
-	drawMenu(ctx);
+	menu.style.display = "flex";
 }
 
 //event listener to load inages first
@@ -59,7 +61,7 @@ window.addEventListener("load", () => {
 			background.draw(ctx);
 			background.update();
 			//play pause
-			const pause = isGamePaused
+			const pause = playBtn
 				? createImage("./assets/images/play.png")
 				: createImage("./assets/images/pause.png");
 			ctx.drawImage(pause, CANVAS_WIDTH - 100, 5, 40, 40);
@@ -101,16 +103,20 @@ window.addEventListener("load", () => {
 						canToggle = true;
 					}, 500);
 				}
+				//pause game
 				const buttonxG = CANVAS_WIDTH - 100;
 				const buttonyG = 5;
 				if (isMouseInsideButton(mouseX, mouseY, buttonxG, buttonyG, size)) {
-					isGamePaused = !isGamePaused;
+					playBtn = !playBtn;
+					// isGamePaused = !isGamePaused;
 					canToggle = false; // Disable further toggles in the current frame
-
+					setTimeout(() => {
+						isGamePaused = !isGamePaused;
+					}, 200);
 					// Schedule the reset of the flag after a short delay
 					setTimeout(() => {
 						canToggle = true;
-					}, 500);
+					}, 300);
 				}
 			});
 

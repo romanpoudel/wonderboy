@@ -15,6 +15,8 @@ import { Fruit } from "./Fruit.js";
 import { gameSound, fruitSound, jumpSound, deathSound } from "./sound.js";
 import { endGame } from "./index.js";
 
+const scoreValue = document.querySelector(".score__value");
+
 //fruits spawn
 let fruits = [new Fruit(), new Fruit(), new Fruit(), new Fruit(), new Fruit()];
 let fruitScore = 0;
@@ -60,6 +62,7 @@ let scrollOffset = 0;
 
 export function movement(player, platform, background, ctx) {
 	player.score = Math.floor(scrollOffset * 0.02) + fruitScore;
+	scoreValue.textContent = player.score - 1;
 	stones.forEach((stone) => {
 		stone.draw(ctx);
 		if (stone.collision(player)) {
@@ -104,6 +107,11 @@ export function movement(player, platform, background, ctx) {
 			fruits.splice(i, 1);
 		}
 	});
+	if (keys.space && player.isAtPlatform) {
+		player.velocity.y = -12;
+		player.frames = 5;
+		jumpSound.play();
+	}
 	if (
 		((keys.a || keys.leftArrow) && player.position.x > 0) ||
 		(keys.leftArrow && scrollOffset === 0 && player.position.x > 0)
@@ -115,10 +123,6 @@ export function movement(player, platform, background, ctx) {
 		player.facing = "right";
 		changeFrame(player);
 		player.velocity.x = +SPEED;
-	} else if (keys.space && player.isAtPlatform) {
-		player.velocity.y = -12;
-		player.frames = 5;
-		jumpSound.play();
 	} else if (scrollOffset === 48400) {
 		//end point
 		player.velocity.x = 3;
@@ -126,6 +130,8 @@ export function movement(player, platform, background, ctx) {
 		if (player.position.x >= 650) {
 			player.velocity.x = 0;
 			player.frames = 0;
+			scoreValue.textContent = player.score;
+			endGame();
 		}
 	} else {
 		player.velocity.x = 0;
@@ -161,7 +167,6 @@ export function movement(player, platform, background, ctx) {
 	checkpoints.forEach((checkpoint) => {
 		checkpoint.draw(ctx);
 	});
-
 }
 
 function changeFrame(player) {
