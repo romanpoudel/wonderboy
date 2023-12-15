@@ -1,10 +1,11 @@
+import { areColliding } from "./collision.js";
 import { CANVAS_HEIGHT } from "./constants.js";
 
 export class CheckPoint {
-	constructor({ x, y },frame) {
+	constructor({ x, y }, frame) {
 		this.position = {
 			x,
-			y
+			y,
 		};
 		this.image = new Image();
 		this.image.src = "./assets/images/checkPoint.png";
@@ -14,11 +15,15 @@ export class CheckPoint {
 		};
 		this.frames = frame;
 		this.drawn = true;
+		this.velocity = {
+			x: 0,
+			y: 0
+		};
 	}
 	draw(ctx) {
 		ctx.drawImage(
 			this.image,
-			this.frames*this.width,
+			this.frames * this.width,
 			0,
 			this.width,
 			this.height,
@@ -27,5 +32,8 @@ export class CheckPoint {
 			80,
 			50
 		);
+	}
+	collision(player) {
+		return areColliding(this, player);
 	}
 }

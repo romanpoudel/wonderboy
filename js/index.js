@@ -7,6 +7,9 @@ import { Background } from "./Background.js";
 import { createImage, isMouseInsideButton } from "./utils.js";
 import { Enemy } from "./Enemy/Enemy.js";
 import { gameSound } from "./sound.js";
+import "./level.js";
+
+const scoreValue = document.querySelector(".score__value");
 
 //setup canvas
 const canvas = document.getElementById("canvas");
@@ -16,32 +19,48 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 export const ctx = canvas.getContext("2d");
 //create background
-const background = new Background({ x: 0, y: 0 });
+let background = new Background({ x: 0, y: 0 });
 
 //images
-const image = createImage("./assets/images/base.png");
-const image1 = createImage("./assets/images/Plataforma.png");
+let image = createImage("./assets/images/base.png");
+let image1 = createImage("./assets/images/Plataforma.png");
 
 //sound functionality
 let sound = false;
 let canToggle = true; // Flag to prevent multiple toggles in the same frame
 
-//game ending value
-let hasGameEnded = false;
-let isGamePaused = false;
-let playBtn = false;
-
-export function endGame() {
-	hasGameEnded = true;
-	menu.style.display = "flex";
-}
-
-//event listener to load inages first
 window.addEventListener("load", () => {
-	//creating a player
-	const player = new Player();
+	
+});
 
-	const platforms = [
+//creating a player
+let player = new Player();
+
+let platforms = [
+	new Platform({ x: 0, y: CANVAS_HEIGHT - 90 }, image),
+	new Platform({ x: image.width, y: CANVAS_HEIGHT - 90 }, image),
+	new Platform({ x: image.width * 2, y: CANVAS_HEIGHT - 90 }, image),
+	new Platform({ x: image.width * 3, y: CANVAS_HEIGHT - 90 }, image),
+	new Platform({ x: image.width * 4, y: 300 }, image1),
+	new Platform({ x: image.width * 4 + 200, y: 200 }, image1),
+	new Platform({ x: image.width * 4 + 450, y: 300 }, image1),
+	new Platform({ x: image.width * 5, y: CANVAS_HEIGHT - 90 }, image),
+	new Platform({ x: image.width * 6, y: CANVAS_HEIGHT - 90 }, image),
+	new Platform({ x: image.width * 7, y: CANVAS_HEIGHT - 90 }, image),
+];
+
+function init() {
+	//this init should save score and reset the game
+	console.log("triggered");
+	//create background
+	background = new Background({ x: 0, y: 0 });
+
+	//images
+	image = createImage("./assets/images/base.png");
+	image1 = createImage("./assets/images/Plataforma.png");
+
+	player = new Player();
+	platforms = [
 		new Platform({ x: 0, y: CANVAS_HEIGHT - 90 }, image),
 		new Platform({ x: image.width, y: CANVAS_HEIGHT - 90 }, image),
 		new Platform({ x: image.width * 2, y: CANVAS_HEIGHT - 90 }, image),
@@ -53,7 +72,26 @@ window.addEventListener("load", () => {
 		new Platform({ x: image.width * 6, y: CANVAS_HEIGHT - 90 }, image),
 		new Platform({ x: image.width * 7, y: CANVAS_HEIGHT - 90 }, image),
 	];
+}
 
+//game ending value
+let hasGameEnded = false;
+let isGamePaused = false;
+let playBtn = false;
+
+export function endGame(state) {
+	if (state) {
+		hasGameEnded = true;
+		menu.style.display = "flex";
+		scoreValue.innerHTML = player.score;
+	} else {
+		hasGameEnded = false;
+		menu.style.display = "none";
+		init();
+	}
+}
+//event listener to load images first
+window.addEventListener("load", () => {
 	//animation loop
 	function animate() {
 		if (!hasGameEnded && !isGamePaused) {
