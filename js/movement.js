@@ -206,6 +206,10 @@ export function movement(player, platform, background, ctx) {
 			fruitScore += 100;
 			fruits.splice(i, 1);
 		}
+		if(fruit.collision(platform)){
+			fruits.splice(i, 1);
+			fruits.push(new Fruit());
+		}
 	});
 	checkpoints.forEach((checkpoint) => {
 		checkpoint.draw(ctx);

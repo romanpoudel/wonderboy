@@ -1,4 +1,5 @@
 import { CANVAS_HEIGHT, GRAVITY } from "./constants.js";
+import { endGame } from "./index.js";
 import { createImage } from "./utils.js";
 
 export class Player {
@@ -60,8 +61,9 @@ export class Player {
 			this.velocity.y += GRAVITY;
 			this.isAtPlatform = false;
 		} else {
-			this.velocity.y = 0;
+			// this.velocity.y = 0;
 			console.log("fail");
+			endGame(true);
 			this.isAtPlatform = true;
 		}
 	}

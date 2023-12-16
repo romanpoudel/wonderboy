@@ -29,9 +29,6 @@ let image1 = createImage("./assets/images/Plataforma.png");
 let sound = false;
 let canToggle = true; // Flag to prevent multiple toggles in the same frame
 
-window.addEventListener("load", () => {
-	
-});
 
 //creating a player
 let player = new Player();
