@@ -1,18 +1,21 @@
 import { endGame } from "./index.js";
 
-const menu = document.querySelector(".menu");
+export let gameLevel=1;
 
 function selectLevel(level){
+  gameLevel = level;
   switch(level){
     case 1:
       // Level 1
-      console.log("level1")
+      console.log("level1",gameLevel)
       //restart the game
       endGame(false);
       break;
     case 2:
       // Level 2
-      console.log("level2")
+      // gameLevel = level;
+      console.log("level2",gameLevel)
+      endGame(false);
       break;
     case 3:
       // Level 3

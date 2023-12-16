@@ -7,7 +7,9 @@ import { Background } from "./Background.js";
 import { createImage, isMouseInsideButton } from "./utils.js";
 import { Enemy } from "./Enemy/Enemy.js";
 import { gameSound } from "./sound.js";
-import "./level.js";
+import  "./level.js";
+import { gameLevel } from "./level.js";
+import { initMove } from "./movement.js";
 
 const scoreValue = document.querySelector(".score__value");
 
@@ -29,7 +31,6 @@ let image1 = createImage("./assets/images/Plataforma.png");
 let sound = false;
 let canToggle = true; // Flag to prevent multiple toggles in the same frame
 
-
 //creating a player
 let player = new Player();
 
@@ -47,28 +48,70 @@ let platforms = [
 ];
 
 function init() {
+	initMove(gameLevel);
 	//this init should save score and reset the game
-	console.log("triggered");
-	//create background
-	background = new Background({ x: 0, y: 0 });
+	switch (gameLevel) {
+		case 1:
+			// Level 1
+			console.log("bg1",gameLevel);
+			//create background
+			background = new Background({ x: 0, y: 0 });
 
-	//images
-	image = createImage("./assets/images/base.png");
-	image1 = createImage("./assets/images/Plataforma.png");
+			//images
+			image = createImage("./assets/images/base.png");
+			image1 = createImage("./assets/images/Plataforma.png");
 
-	player = new Player();
-	platforms = [
-		new Platform({ x: 0, y: CANVAS_HEIGHT - 90 }, image),
-		new Platform({ x: image.width, y: CANVAS_HEIGHT - 90 }, image),
-		new Platform({ x: image.width * 2, y: CANVAS_HEIGHT - 90 }, image),
-		new Platform({ x: image.width * 3, y: CANVAS_HEIGHT - 90 }, image),
-		new Platform({ x: image.width * 4, y: 300 }, image1),
-		new Platform({ x: image.width * 4 + 200, y: 200 }, image1),
-		new Platform({ x: image.width * 4 + 450, y: 300 }, image1),
-		new Platform({ x: image.width * 5, y: CANVAS_HEIGHT - 90 }, image),
-		new Platform({ x: image.width * 6, y: CANVAS_HEIGHT - 90 }, image),
-		new Platform({ x: image.width * 7, y: CANVAS_HEIGHT - 90 }, image),
-	];
+			player = new Player();
+			platforms = [
+				new Platform({ x: 0, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width * 2, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width * 3, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width * 4, y: 300 }, image1),
+				new Platform({ x: image.width * 4 + 200, y: 200 }, image1),
+				new Platform({ x: image.width * 4 + 450, y: 300 }, image1),
+				new Platform({ x: image.width * 5, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width * 6, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width * 7, y: CANVAS_HEIGHT - 90 }, image),
+			];
+			break;
+		case 2:
+			// Level 2
+			console.log("bg2",gameLevel);
+			//create background
+			background = new Background({ x: 0, y: 0 });
+
+			//images
+			image = createImage("./assets/images/base.png");
+			image1 = createImage("./assets/images/Plataforma.png");
+
+			player = new Player();
+			platforms = [
+				new Platform({ x: 0, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width * 2, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width * 3+100, y: 300 }, image1),
+				new Platform({ x: image.width * 3 + 400, y: 300 }, image1),
+				new Platform({ x: image.width * 4, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width * 5, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width * 6, y: CANVAS_HEIGHT - 90 }, image),
+				new Platform({ x: image.width * 7 + 150, y: 300 }, image1),
+				new Platform({ x: image.width * 8-200, y: CANVAS_HEIGHT - 90 }, image),
+			];
+			break;
+		case 3:
+			// Level 3
+			console.log("level3");
+			break;
+		case 4:
+			// Level 4
+			console.log("level4");
+			break;
+		case 5:
+			// Level 5
+			console.log("level5");
+			break;
+	}
 }
 
 //game ending value
@@ -117,6 +160,7 @@ window.addEventListener("load", () => {
 			ctx.font = "bold 18px Arial ";
 			ctx.fillStyle = "black";
 			ctx.fillText("Score: " + player.score, 20, 30);
+			ctx.fillText("Level: " + gameLevel, 150, 30);
 
 			// Handle mouse click event
 			canvas.addEventListener("click", function (event) {

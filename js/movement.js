@@ -12,9 +12,10 @@ import { Fire } from "./Enemy/Fire.js";
 import { Snake } from "./Enemy/Snake.js";
 import { Bird } from "./Enemy/Bird.js";
 import { Fruit } from "./Fruit.js";
+import { Spring } from "./powerup/Spring.js";
 import { gameSound, fruitSound, jumpSound, deathSound } from "./sound.js";
 import { endGame } from "./index.js";
-
+import { Snail } from "./Enemy/Snail.js";
 
 //fruits spawn
 let fruits = [new Fruit(), new Fruit(), new Fruit(), new Fruit(), new Fruit()];
@@ -43,7 +44,7 @@ let snakes = [
 
 //spawn birds every 4 seconds
 let birds = [];
-let interval=setInterval(() => {
+let interval = setInterval(() => {
 	birds.push(new Bird({ x: CANVAS_WIDTH, y: CANVAS_HEIGHT - 260 }));
 	//remove birds out of screen
 	birds = birds.filter((bird) => !bird.isMarkedForDeletion);
@@ -56,53 +57,117 @@ let checkpoints = [
 	new CheckPoint({ x: imagew * 5, y: CANVAS_HEIGHT - 140 }, 3),
 	new CheckPoint({ x: 5461, y: CANVAS_HEIGHT - 140 }, 4),
 ];
+let springs = [];
+let snails=[];
 
 let scrollOffset = 0;
 
 //reset game
-function init() {
-	//fruits spawn
-	fruits = [new Fruit(), new Fruit(), new Fruit(), new Fruit(), new Fruit()];
-	fruitScore = 0;
+export function initMove(gameLevel) {
+	switch (gameLevel) {
+		case 1:
+			console.log("moment",gameLevel)
+			// Level 1
+			//fruits spawn
+			fruits = [
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+			];
+			fruitScore = 0;
 
-	//slown down frame change for player
-	frameChangeCounter = 0;
+			//slown down frame change for player
+			frameChangeCounter = 0;
 
-	//obstacles
-	stones = [
-		new Stone({ x: 500, y: CANVAS_HEIGHT - 130 }),
-		new Stone({ x: CANVAS_WIDTH * 2, y: CANVAS_HEIGHT - 130 }),
-		new Stone({ x: CANVAS_WIDTH * 3, y: CANVAS_HEIGHT - 130 }),
-		new Stone({ x: CANVAS_WIDTH * 6, y: CANVAS_HEIGHT - 130 }),
-	];
+			//obstacles
+			stones = [
+				new Stone({ x: 500, y: CANVAS_HEIGHT - 130 }),
+				new Stone({ x: CANVAS_WIDTH * 2, y: CANVAS_HEIGHT - 130 }),
+				new Stone({ x: CANVAS_WIDTH * 3, y: CANVAS_HEIGHT - 130 }),
+				new Stone({ x: CANVAS_WIDTH * 6, y: CANVAS_HEIGHT - 130 }),
+			];
 
-	fires = [
-		new Fire({ x: 800, y: CANVAS_HEIGHT - 150 }),
-		new Fire({ x: CANVAS_WIDTH * 2 + 500, y: CANVAS_HEIGHT - 150 }),
-		new Fire({ x: CANVAS_WIDTH * 5 + 200, y: CANVAS_HEIGHT - 150 }),
-	];
-	snakes = [
-		new Snake({ x: 1300, y: CANVAS_HEIGHT - 130 }),
-		new Snake({ x: CANVAS_WIDTH * 5 - 200, y: CANVAS_HEIGHT - 130 }),
-	];
+			fires = [
+				new Fire({ x: 800, y: CANVAS_HEIGHT - 150 }),
+				new Fire({ x: CANVAS_WIDTH * 2 + 500, y: CANVAS_HEIGHT - 150 }),
+				new Fire({ x: CANVAS_WIDTH * 5 + 200, y: CANVAS_HEIGHT - 150 }),
+			];
+			snakes = [
+				new Snake({ x: 1300, y: CANVAS_HEIGHT - 130 }),
+				new Snake({ x: CANVAS_WIDTH * 5 - 200, y: CANVAS_HEIGHT - 130 }),
+			];
 
-	//spawn birds every 4 seconds
-	birds = [];
-	
-	//checkpoints
-	checkpoints = [
-		new CheckPoint({ x: 0, y: CANVAS_HEIGHT - 140 }, 0),
-		new CheckPoint({ x: imagew * 1.5, y: CANVAS_HEIGHT - 140 }, 1),
-		new CheckPoint({ x: imagew * 3.8, y: CANVAS_HEIGHT - 140 }, 2),
-		new CheckPoint({ x: imagew * 5, y: CANVAS_HEIGHT - 140 }, 3),
-		new CheckPoint({ x: 5461, y: CANVAS_HEIGHT - 140 }, 4),
-	];
-	scrollOffset = 0;
+			//spawn birds every 4 seconds
+			birds = [];
+
+			//checkpoints
+			checkpoints = [
+				new CheckPoint({ x: 0, y: CANVAS_HEIGHT - 140 }, 0),
+				new CheckPoint({ x: imagew * 1.5, y: CANVAS_HEIGHT - 140 }, 1),
+				new CheckPoint({ x: imagew * 3.8, y: CANVAS_HEIGHT - 140 }, 2),
+				new CheckPoint({ x: imagew * 5, y: CANVAS_HEIGHT - 140 }, 3),
+				new CheckPoint({ x: 5461, y: CANVAS_HEIGHT - 140 }, 4),
+			];
+			scrollOffset = 0;
+			break;
+		case 2:
+			//fruits spawn
+			console.log("moment2",gameLevel)
+			fruits = [
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+			];
+			fruitScore = 0;
+
+			//slown down frame change for player
+			frameChangeCounter = 0;
+
+			//obstacles
+			stones = [
+				// new Stone({ x: 500, y: CANVAS_HEIGHT - 130 }),
+				new Stone({ x: CANVAS_WIDTH * 2, y: CANVAS_HEIGHT - 130 }),
+				new Stone({ x: CANVAS_WIDTH * 4, y: CANVAS_HEIGHT - 130 }),
+				new Stone({ x: CANVAS_WIDTH * 6, y: CANVAS_HEIGHT - 130 }),
+			];
+
+			fires = [
+				new Fire({ x: 800, y: CANVAS_HEIGHT - 150 }),
+				new Fire({ x: CANVAS_WIDTH * 4 + 500, y: CANVAS_HEIGHT - 150 }),
+				new Fire({ x: CANVAS_WIDTH * 6 - 500, y: CANVAS_HEIGHT - 150 }),
+			];
+			snakes = [
+				new Snake({ x: 1300, y: CANVAS_HEIGHT - 130 }),
+				new Snake({ x: CANVAS_WIDTH * 5 - 200, y: CANVAS_HEIGHT - 130 }),
+			];
+			snails=[new Snail({x:500,y:CANVAS_HEIGHT-130})];
+
+			springs=[new Spring({ x: 2078, y: CANVAS_HEIGHT - 110 }),new Spring({x:CANVAS_WIDTH * 5-400 ,y:CANVAS_HEIGHT-110})];
+
+			//spawn birds every 4 seconds
+			birds = [];
+
+			//checkpoints
+			checkpoints = [
+				new CheckPoint({ x: 0, y: CANVAS_HEIGHT - 140 }, 0),
+				new CheckPoint({ x: imagew * 1.5, y: CANVAS_HEIGHT - 140 }, 1),
+				new CheckPoint({ x: imagew * 4, y: CANVAS_HEIGHT - 140 }, 2),
+				new CheckPoint({ x: imagew * 5, y: CANVAS_HEIGHT - 140 }, 3),
+				new CheckPoint({ x: 5461, y: CANVAS_HEIGHT - 140 }, 4),
+			];
+			scrollOffset = 0;
+			break;
+	}
 }
 
 export function movement(player, platform, background, ctx) {
-
-	
 	if (keys.space && player.isAtPlatform) {
 		player.velocity.y = -12;
 		player.frames = 5;
@@ -127,7 +192,7 @@ export function movement(player, platform, background, ctx) {
 			player.velocity.x = 0;
 			player.frames = 0;
 			endGame(true);
-			init();
+			// init();
 		}
 	} else {
 		player.velocity.x = 0;
@@ -151,11 +216,17 @@ export function movement(player, platform, background, ctx) {
 				snakes.forEach((snake) => {
 					snake.position.x -= SPEED * BGMULTIPLLIER;
 				});
+				snails.forEach((snail) => {
+					snail.position.x -= SPEED * BGMULTIPLLIER;
+				});
 				birds.forEach((bird) => {
 					bird.position.x -= SPEED * BGMULTIPLLIER;
 				});
 				fruits.forEach((fruit) => {
 					fruit.position.x -= SPEED * BGMULTIPLLIER;
+				});
+				springs.forEach((spring) => {
+					spring.position.x -= SPEED * BGMULTIPLLIER;
 				});
 			}
 		}
@@ -180,7 +251,7 @@ export function movement(player, platform, background, ctx) {
 		if (fire.collision(player)) {
 			deathSound.play();
 			endGame(true);
-			init();
+			// init();
 		}
 	});
 	snakes.forEach((snake) => {
@@ -188,7 +259,15 @@ export function movement(player, platform, background, ctx) {
 		if (snake.collision(player)) {
 			deathSound.play();
 			endGame(true);
-			init();
+			// init();
+		}
+	});
+	snails.forEach((snail) => {
+		snail.update(ctx);
+		if (snail.collision(player)) {
+			deathSound.play();
+			endGame(true);
+			// init();
 		}
 	});
 	birds.forEach((bird) => {
@@ -196,7 +275,7 @@ export function movement(player, platform, background, ctx) {
 		if (bird.collision(player)) {
 			deathSound.play();
 			endGame(true);
-			init();
+			// init();
 		}
 	});
 	fruits.forEach((fruit, i) => {
@@ -206,11 +285,21 @@ export function movement(player, platform, background, ctx) {
 			fruitScore += 100;
 			fruits.splice(i, 1);
 		}
-		if(fruit.collision(platform)){
+		if (fruit.collision(platform)) {
 			fruits.splice(i, 1);
 			fruits.push(new Fruit());
 		}
 	});
+
+	springs.forEach((spring) => {
+		spring.update(ctx);
+		if (spring.collision(player)) {
+			player.velocity.y = -15;
+			player.frames = 5;
+			jumpSound.play();
+		}
+	});
+
 	checkpoints.forEach((checkpoint) => {
 		checkpoint.draw(ctx);
 	});
