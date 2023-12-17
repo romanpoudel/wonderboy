@@ -18,6 +18,16 @@ import { Spider } from "./Enemy/Spider.js";
 import { DangerHead } from "./Enemy/DangerHead.js";
 import { hammers } from "./index.js";
 
+const gameResult=document.querySelector(".result");
+
+function result(final){
+	if(final){
+		gameResult.innerHTML="Complete"
+	}else{
+		gameResult.innerHTML="You Failed"
+	}
+}
+
 //as background image is repeated due to foreach loop while drawing platform
 let bgMultiplier = 0.1;
 let maxScrollOffset = 48400;
@@ -503,6 +513,7 @@ export function movement(player, platform, background, ctx) {
 			player.velocity.x = 0;
 			player.frames = 0;
 			endGame(true);
+			result(true)
 		}
 	} else {
 		player.velocity.x = 0;
@@ -579,6 +590,7 @@ export function movement(player, platform, background, ctx) {
 		if (fire.collision(player)) {
 			deathSound.play();
 			endGame(true);
+			result(false);
 		}
 	});
 	snakes.forEach((snake) => {
@@ -586,6 +598,7 @@ export function movement(player, platform, background, ctx) {
 		if (snake.collision(player)) {
 			deathSound.play();
 			endGame(true);
+			result(false);
 		}
 	});
 	snails.forEach((snail) => {
@@ -593,6 +606,7 @@ export function movement(player, platform, background, ctx) {
 		if (snail.collision(player)) {
 			deathSound.play();
 			endGame(true);
+			result(false);
 		}
 	});
 	birds.forEach((bird) => {
@@ -600,6 +614,7 @@ export function movement(player, platform, background, ctx) {
 		if (bird.collision(player)) {
 			deathSound.play();
 			endGame(true);
+			result(false);
 		}
 	});
 	fruits.forEach((fruit, i) => {
@@ -632,6 +647,7 @@ export function movement(player, platform, background, ctx) {
 				console.log(err);
 			});
 			endGame(true);
+			result(false);
 		}
 	});
 	frogs.forEach((frog) => {
@@ -641,6 +657,7 @@ export function movement(player, platform, background, ctx) {
 				console.log(err);
 			});
 			endGame(true);
+			result(false);
 		}
 	});
 	lavas.forEach((lava) => {
@@ -650,6 +667,7 @@ export function movement(player, platform, background, ctx) {
 				console.log(err);
 			});
 			endGame(true);
+			result(false);
 		}
 	});
 	spiders.forEach((spider) => {
@@ -659,6 +677,7 @@ export function movement(player, platform, background, ctx) {
 				console.log(err);
 			});
 			endGame(true);
+			result(false);
 		}
 	});
 	dangers.forEach((danger) => {
@@ -668,6 +687,7 @@ export function movement(player, platform, background, ctx) {
 				console.log(err);
 			});
 			endGame(true);
+			result(false);
 		}
 	});
 

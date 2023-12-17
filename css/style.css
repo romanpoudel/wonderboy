@@ -20,44 +20,44 @@
 
 .menu {
 	position: absolute;
-	background: #2AAA8A;
+	background: #2aaa8a;
 	width: 300px;
 	height: 200px;
-  padding: 20px;
+	padding: 20px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	border-radius: 10px;
-  color: #fff;
+	color: #fff;
 }
 
 .score,
 .level {
-  width: 100%;
+	width: 100%;
 	font-size: 24px;
 	font-weight: bold;
-  text-align: center;
+	text-align: center;
 }
 
 .level__select {
-  padding-top: 15px;
-  display: flex;
-  justify-content: space-between;
+	padding-top: 15px;
+	display: flex;
+	justify-content: space-between;
 }
 
-.level__value{
-  font-size: 18px;
-  background: #00A36C;
-  padding: 10px;
-  border-radius: 5px;
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  cursor: pointer;
+.level__value {
+	font-size: 18px;
+	background: #00a36c;
+	padding: 10px;
+	border-radius: 5px;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	cursor: pointer;
 }
 
-.start{
+.start {
 	position: absolute;
 	width: 100vw;
 	height: 100vh;
@@ -65,4 +65,9 @@
 	justify-content: center;
 	align-items: center;
 	z-index: 100;
+}
+
+.result {
+	display: block;
+	margin-top: 10px;
 }
