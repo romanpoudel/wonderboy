@@ -15,6 +15,8 @@ import { Frog } from "./Enemy/Frog.js";
 import { createImage } from "./utils.js";
 import { Lava } from "./Enemy/Lava.js";
 import { Spider } from "./Enemy/Spider.js";
+import { DangerHead } from "./Enemy/DangerHead.js";
+import { hammers } from "./index.js";
 
 //as background image is repeated due to foreach loop while drawing platform
 let bgMultiplier = 0.1;
@@ -23,6 +25,7 @@ let maxScrollOffset = 48400;
 //fruits spawn
 let fruits = [new Fruit(), new Fruit(), new Fruit(), new Fruit(), new Fruit()];
 let fruitScore = 0;
+let enemyScore = 0;
 
 //slown down frame change for player
 let frameChangeCounter = 0;
@@ -67,6 +70,7 @@ let frogs = [];
 let spikes = [];
 let lavas = [];
 let spiders = [];
+let dangers = [];
 
 let scrollOffset = 0;
 
@@ -78,14 +82,11 @@ export function initMove(gameLevel) {
 			bgMultiplier = 0.1;
 			maxScrollOffset = 48400;
 			//fruits spawn
-			fruits = [
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-			];
+			for (let i = 0; i < 5; i++) {
+				fruits.push(new Fruit());
+			}
 			fruitScore = 0;
+			enemyScore = 0;
 
 			//slown down frame change for player
 			frameChangeCounter = 0;
@@ -114,6 +115,7 @@ export function initMove(gameLevel) {
 			spikes = [];
 			lavas = [];
 			spiders = [];
+			dangers = [];
 			//spawn birds every 4 seconds
 			birds = [];
 
@@ -131,17 +133,11 @@ export function initMove(gameLevel) {
 			bgMultiplier = 0.1;
 			maxScrollOffset = 48400;
 			//fruits spawn
-			fruits = [
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-			];
+			for (let i = 0; i < 15; i++) {
+				fruits.push(new Fruit());
+			}
 			fruitScore = 0;
+			enemyScore = 0;
 
 			//slown down frame change for player
 			frameChangeCounter = 0;
@@ -172,6 +168,7 @@ export function initMove(gameLevel) {
 			];
 			lavas = [];
 			spiders = [];
+			dangers = [];
 
 			//spawn birds every 4 seconds
 			birds = [];
@@ -190,23 +187,11 @@ export function initMove(gameLevel) {
 			bgMultiplier = 0.0909;
 			maxScrollOffset = 53000;
 			//fruits spawn
-			fruits = [
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-			];
+			for (let i = 0; i < 15; i++) {
+				fruits.push(new Fruit());
+			}
 			fruitScore = 0;
+			enemyScore = 0;
 
 			//slown down frame change for player
 			frameChangeCounter = 0;
@@ -244,6 +229,7 @@ export function initMove(gameLevel) {
 			];
 			lavas = [];
 			spiders = [];
+			dangers = [];
 
 			//spawn birds every 4 seconds
 			birds = [];
@@ -262,34 +248,11 @@ export function initMove(gameLevel) {
 			bgMultiplier = 0.0833333333333333;
 			maxScrollOffset = 58000;
 			//fruits spawn
-			fruits = [
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-				new Fruit(),
-			];
+			for (let i = 0; i < 20; i++) {
+				fruits.push(new Fruit());
+			}
 			fruitScore = 0;
+			enemyScore = 0;
 
 			//slown down frame change for player
 			frameChangeCounter = 0;
@@ -319,9 +282,7 @@ export function initMove(gameLevel) {
 				];
 			};
 
-			frogs = [
-				new Frog({ x: imagew * 3, y: CANVAS_HEIGHT - 130 }),
-			];
+			frogs = [new Frog({ x: imagew * 3, y: CANVAS_HEIGHT - 130 })];
 
 			for (let i = 0; i < 30; i++) {
 				lavas.push(new Lava({ x: imagew * 2 + i * 25, y: CANVAS_HEIGHT - 30 }));
@@ -331,10 +292,77 @@ export function initMove(gameLevel) {
 			}
 
 			spiders = [
-				new Spider({ x: imagew * 5 - 150, y:  180 }),
-				new Spider({ x: imagew * 5 - 110, y:  200 }),
-				new Spider({ x: CANVAS_WIDTH * 6, y:  220 }),
+				new Spider({ x: imagew * 5 - 150, y: 180 }),
+				new Spider({ x: imagew * 5 - 110, y: 200 }),
+				new Spider({ x: CANVAS_WIDTH * 6, y: 220 }),
 			];
+			//spawn birds every 4 seconds
+			birds = [];
+
+			//checkpoints
+			checkpoints = [
+				new CheckPoint({ x: 0, y: CANVAS_HEIGHT - 140 }, 0),
+				new CheckPoint({ x: imagew * 2 - 40, y: CANVAS_HEIGHT - 140 }, 1),
+				new CheckPoint({ x: imagew * 3, y: CANVAS_HEIGHT - 140 }, 2),
+				new CheckPoint({ x: imagew * 5 - 100, y: CANVAS_HEIGHT - 140 }, 3),
+				new CheckPoint({ x: 5461, y: CANVAS_HEIGHT - 140 }, 4),
+			];
+			scrollOffset = 0;
+			break;
+		case 5:
+			bgMultiplier = 0.0833333333333333;
+			maxScrollOffset = 58000;
+			//fruits spawn
+			for (let i = 0; i < 30; i++) {
+				fruits.push(new Fruit());
+			}
+			fruitScore = 0;
+			enemyScore = 0;
+
+			//slown down frame change for player
+			frameChangeCounter = 0;
+
+			//obstacles
+			stones = [
+				new Stone({ x: CANVAS_WIDTH * 3 + 100, y: CANVAS_HEIGHT - 130 }),
+				new Stone({ x: CANVAS_WIDTH * 4, y: CANVAS_HEIGHT - 130 }),
+				new Stone({ x: CANVAS_WIDTH * 6 + 300, y: CANVAS_HEIGHT - 130 }),
+			];
+
+			fires = [
+				new Fire({ x: 700, y: CANVAS_HEIGHT - 150 }),
+				new Fire({ x: CANVAS_WIDTH * 4 - 300, y: CANVAS_HEIGHT - 150 }),
+			];
+			snakes = [
+				new Snake({ x: CANVAS_WIDTH * 6 + 55, y: CANVAS_HEIGHT - 130 }),
+			];
+			snails = [new Snail({ x: imagew + 500, y: CANVAS_HEIGHT - 130 })];
+
+			springs = [new Spring({ x: imagew * 6 - 20, y: 350 })];
+			let redspikeImg1 = createImage("./assets/images/obstacles/spikesRed.png");
+			redspikeImg1.onload = () => {
+				spikes = [
+					new Spikes({ x: 300, y: CANVAS_HEIGHT - 110 }, redspikeImg1),
+					new Spikes({ x: 360, y: CANVAS_HEIGHT - 110 }, redspikeImg1),
+				];
+			};
+
+			frogs = [new Frog({ x: imagew * 3, y: CANVAS_HEIGHT - 130 })];
+
+			for (let i = 0; i < 30; i++) {
+				lavas.push(new Lava({ x: imagew * 2 + i * 25, y: CANVAS_HEIGHT - 30 }));
+			}
+			for (let i = 0; i < 43; i++) {
+				lavas.push(new Lava({ x: imagew * 5 + i * 25, y: CANVAS_HEIGHT - 30 }));
+			}
+
+			spiders = [
+				new Spider({ x: imagew * 5 - 150, y: 180 }),
+				new Spider({ x: imagew * 5 - 110, y: 200 }),
+				new Spider({ x: CANVAS_WIDTH * 6, y: 220 }),
+			];
+
+			dangers = [new DangerHead({ x: 800, y: CANVAS_HEIGHT - 150 })];
 			//spawn birds every 4 seconds
 			birds = [];
 
@@ -422,6 +450,9 @@ export function movement(player, platform, background, ctx) {
 				});
 				spiders.forEach((spider) => {
 					spider.position.x -= SPEED * bgMultiplier;
+				});
+				dangers.forEach((danger) => {
+					danger.position.x -= SPEED * bgMultiplier;
 				});
 			}
 		}
@@ -521,8 +552,61 @@ export function movement(player, platform, background, ctx) {
 			// endGame(true);
 		}
 	});
+	dangers.forEach((danger) => {
+		danger.update(ctx);
+		if (danger.collision(player)) {
+			deathSound.play();
+			// endGame(true);
+		}
+	});
 
-	player.score = Math.floor(scrollOffset * 0.02) + fruitScore;
+	//hammer collision with enemies
+	hammers.forEach((hammer) => {
+		//bird
+		birds.forEach((bird, i) => {
+			if (hammer.collision(bird)) {
+				birds.splice(i, 1);
+				enemyScore += 150;
+			}
+		});
+		//dangerHead
+		dangers.forEach((danger, i) => {
+			if (hammer.collision(danger)) {
+				dangers.splice(i, 1);
+				enemyScore += 150;
+			}
+		});
+		//frog
+		frogs.forEach((frog, i) => {
+			if (hammer.collision(frog)) {
+				frogs.splice(i, 1);
+				enemyScore += 150;
+			}
+		});
+		// snail
+		snails.forEach((snail, i) => {
+			if (hammer.collision(snail)) {
+				snails.splice(i, 1);
+				enemyScore += 150;
+			}
+		});
+		// snake
+		snakes.forEach((snake, i) => {
+			if (hammer.collision(snake)) {
+				snakes.splice(i, 1);
+				enemyScore += 150;
+			}
+		});
+		// spider
+		spiders.forEach((spider, i) => {
+			if (hammer.collision(spider)) {
+				spiders.splice(i, 1);
+				enemyScore += 150;
+			}
+		});
+	});
+
+	player.score = Math.floor(scrollOffset * 0.02) + fruitScore + enemyScore;
 }
 
 function changeFrame(player) {

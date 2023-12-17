@@ -1,10 +1,11 @@
 import { CANVAS_HEIGHT, GRAVITY } from "./constants.js";
 import { endGame } from "./index.js";
 import { createImage } from "./utils.js";
+import { Hammer } from "./Hammer.js";
 
 export class Player {
 	constructor() {
-		this.speed=5;
+		this.speed = 5;
 		this.rightSprite = createImage("./assets/images/playerMoveRight1.png");
 		this.leftSprite = createImage("./assets/images/playerMoveLeft.png");
 		this.frames = 0;
@@ -66,5 +67,13 @@ export class Player {
 			endGame(true);
 			this.isAtPlatform = true;
 		}
+	}
+
+	shoot() {
+		const hammer = new Hammer(
+			this.position.x + this.width,
+			this.position.y 
+		);
+		return hammer;
 	}
 }
