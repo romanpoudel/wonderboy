@@ -2,9 +2,10 @@ import { createImage } from "../utils.js";
 import { Enemy } from "./Enemy.js";
 
 export class Spikes extends Enemy {
-	constructor(position) {
+	constructor(position,image) {
 		super(position);
-		this.image = createImage("./assets/images/obstacles/spikes.png");
+		this.image = image;
+		// this.image = createImage("./assets/images/obstacles/spikes1.png");
 		this.width = 60;
 		this.height = 20;
 	}

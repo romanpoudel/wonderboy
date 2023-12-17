@@ -20,7 +20,7 @@ function selectLevel(level){
       break;
     case 4:
       // Level 4
-      console.log("level4")
+      endGame(false);
       break;
     case 5:
       // Level 5

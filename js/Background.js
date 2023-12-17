@@ -3,12 +3,12 @@ import { createImage } from "./utils.js";
 import { keys } from "./input.js";
 
 export class Background {
-	constructor({ x, y }) {
+	constructor({ x, y },image) {
 		this.position = {
 			x,
 			y,
 		};
-		this.image = createImage("./assets/images/background2.jpg");
+		this.image = image;
 		this._lastMovement = "right";
 	}
 

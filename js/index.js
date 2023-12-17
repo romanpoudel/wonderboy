@@ -21,7 +21,8 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 export const ctx = canvas.getContext("2d");
 //create background
-let background = new Background({ x: 0, y: 0 });
+let bgImage = createImage("./assets/images/backgrounds/background2.jpg");
+let background = new Background({ x: 0, y: 0 },bgImage);
 
 //images
 let image = createImage("./assets/images/base.png");
@@ -36,6 +37,7 @@ let player = new Player();
 let platforms = [];
 image.onload = function () {
 	image1.onload = function () {
+		player = new Player();
 		platforms = [
 			new Platform({ x: 0, y: CANVAS_HEIGHT - 90 }, image),
 			new Platform({ x: image.width, y: CANVAS_HEIGHT - 90 }, image),
@@ -58,7 +60,8 @@ function init() {
 		case 1:
 			// Level 1
 			//create background
-			background = new Background({ x: 0, y: 0 });
+			bgImage = createImage("./assets/images/backgrounds/background2.jpg")
+			background = new Background({ x: 0, y: 0 },bgImage);
 
 			//images
 			image = createImage("./assets/images/base.png");
@@ -85,7 +88,8 @@ function init() {
 		case 2:
 			// Level 2
 			//create background
-			background = new Background({ x: 0, y: 0 });
+			bgImage = createImage("./assets/images/backgrounds/background2.jpg")
+			background = new Background({ x: 0, y: 0 },bgImage);
 
 			//images
 			image = createImage("./assets/images/base.png");
@@ -115,10 +119,11 @@ function init() {
 		case 3:
 			// Level 3
 			//create background
-			background = new Background({ x: 0, y: 0 });
+			bgImage = createImage("./assets/images/backgrounds/lvl3Bg.jpg")
+			background = new Background({ x: 0, y: 0 },bgImage);
 
 			//images
-			image = createImage("./assets/images/base.png");
+			image = createImage("./assets/images/lvl3Base.jpg");
 			image1 = createImage("./assets/images/cloud.png");
 
 			player = new Player();
@@ -139,17 +144,44 @@ function init() {
 							{ x: image.width * 6 + 400, y: CANVAS_HEIGHT - 90 },
 							image
 						),
-						new Platform(
-							{ x: image.width * 7 , y: CANVAS_HEIGHT - 90 },
-							image
-						),
+						new Platform({ x: image.width * 7, y: CANVAS_HEIGHT - 90 }, image),
 					];
 				};
 			};
 			break;
 		case 4:
 			// Level 4
-			console.log("level4");
+			//create background
+			bgImage = createImage("./assets/images/backgrounds/lvl4Bg.jpeg")
+			background = new Background({ x: 0, y: 0 },bgImage);
+
+			//images
+			image = createImage("./assets/images/lvl4Base.jpg");
+			image1 = createImage("./assets/images/lvl4Platform.jpg");
+
+			player = new Player();
+
+			image.onload = function () {
+				image1.onload = function () {
+					platforms = [
+						new Platform({ x: 0, y: CANVAS_HEIGHT - 90 }, image),
+						new Platform({ x: image.width, y: CANVAS_HEIGHT - 90 }, image),
+						new Platform({ x: image.width * 2 + 120, y: 300 }, image1), //movable platform
+						new Platform({ x: image.width * 2 + 400, y: 300 }, image1), //movable platform
+						new Platform({ x: image.width * 3, y: CANVAS_HEIGHT - 90 }, image),
+						new Platform({ x: image.width * 4, y: CANVAS_HEIGHT - 90 }, image),
+						new Platform({ x: image.width * 5 + 150, y: 330 }, image1),
+						new Platform({ x: image.width * 6 - 80, y: 370 }, image1),
+						new Platform({ x: image.width * 6 - 260, y: 220 }, image1),
+						new Platform({ x: image.width * 6 + 150, y: 150 }, image1),
+						new Platform(
+							{ x: image.width * 6 + 400, y: CANVAS_HEIGHT - 90 },
+							image
+						),
+						new Platform({ x: image.width * 7, y: CANVAS_HEIGHT - 90 }, image),
+					];
+				};
+			};
 			break;
 		case 5:
 			// Level 5

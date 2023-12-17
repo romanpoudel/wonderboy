@@ -12,6 +12,9 @@ import { endGame } from "./index.js";
 import { Snail } from "./Enemy/Snail.js";
 import { Spikes } from "./Enemy/Spikes.js";
 import { Frog } from "./Enemy/Frog.js";
+import { createImage } from "./utils.js";
+import { Lava } from "./Enemy/Lava.js";
+import { Spider } from "./Enemy/Spider.js";
 
 //as background image is repeated due to foreach loop while drawing platform
 let bgMultiplier = 0.1;
@@ -48,6 +51,7 @@ let interval = setInterval(() => {
 	birds.push(new Bird({ x: CANVAS_WIDTH, y: CANVAS_HEIGHT - 260 }));
 	//remove birds out of screen
 	birds = birds.filter((bird) => !bird.isMarkedForDeletion);
+	lavas = lavas.filter((lava) => !lava.isMarkedForDeletion);
 }, 9000);
 //checkpoints
 let checkpoints = [
@@ -61,6 +65,8 @@ let springs = [];
 let snails = [];
 let frogs = [];
 let spikes = [];
+let lavas = [];
+let spiders = [];
 
 let scrollOffset = 0;
 
@@ -106,6 +112,8 @@ export function initMove(gameLevel) {
 			snails = [];
 			frogs = [];
 			spikes = [];
+			lavas = [];
+			spiders = [];
 			//spawn birds every 4 seconds
 			birds = [];
 
@@ -162,6 +170,8 @@ export function initMove(gameLevel) {
 				new Spring({ x: 2078, y: CANVAS_HEIGHT - 110 }),
 				new Spring({ x: CANVAS_WIDTH * 5 - 400, y: CANVAS_HEIGHT - 110 }),
 			];
+			lavas = [];
+			spiders = [];
 
 			//spawn birds every 4 seconds
 			birds = [];
@@ -180,7 +190,6 @@ export function initMove(gameLevel) {
 			bgMultiplier = 0.0909;
 			maxScrollOffset = 53000;
 			//fruits spawn
-			console.log("moment2", gameLevel);
 			fruits = [
 				new Fruit(),
 				new Fruit(),
@@ -219,15 +228,113 @@ export function initMove(gameLevel) {
 			snails = [new Snail({ x: 800, y: CANVAS_HEIGHT - 130 })];
 
 			springs = [new Spring({ x: 4636, y: CANVAS_HEIGHT - 110 })];
-
-			spikes = [new Spikes({ x: 1200, y: CANVAS_HEIGHT - 110 })];
+			let whitespikeImg = createImage(
+				"./assets/images/obstacles/spikesWhite.png"
+			);
+			whitespikeImg.onload = () => {
+				spikes = [
+					new Spikes({ x: 1200, y: CANVAS_HEIGHT - 110 }, whitespikeImg),
+				];
+			};
 
 			frogs = [
 				new Frog({ x: 300, y: CANVAS_HEIGHT - 130 }),
 				new Frog({ x: imagew * 3, y: CANVAS_HEIGHT - 130 }),
 				new Frog({ x: CANVAS_WIDTH * 6, y: CANVAS_HEIGHT - 130 }),
 			];
+			lavas = [];
+			spiders = [];
 
+			//spawn birds every 4 seconds
+			birds = [];
+
+			//checkpoints
+			checkpoints = [
+				new CheckPoint({ x: 0, y: CANVAS_HEIGHT - 140 }, 0),
+				new CheckPoint({ x: imagew * 2 - 40, y: CANVAS_HEIGHT - 140 }, 1),
+				new CheckPoint({ x: imagew * 3, y: CANVAS_HEIGHT - 140 }, 2),
+				new CheckPoint({ x: imagew * 5 - 100, y: CANVAS_HEIGHT - 140 }, 3),
+				new CheckPoint({ x: 5461, y: CANVAS_HEIGHT - 140 }, 4),
+			];
+			scrollOffset = 0;
+			break;
+		case 4:
+			bgMultiplier = 0.0833333333333333;
+			maxScrollOffset = 58000;
+			//fruits spawn
+			fruits = [
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+				new Fruit(),
+			];
+			fruitScore = 0;
+
+			//slown down frame change for player
+			frameChangeCounter = 0;
+
+			//obstacles
+			stones = [
+				new Stone({ x: CANVAS_WIDTH * 3 + 100, y: CANVAS_HEIGHT - 130 }),
+				new Stone({ x: CANVAS_WIDTH * 4, y: CANVAS_HEIGHT - 130 }),
+				new Stone({ x: CANVAS_WIDTH * 6 + 300, y: CANVAS_HEIGHT - 130 }),
+			];
+
+			fires = [
+				new Fire({ x: 700, y: CANVAS_HEIGHT - 150 }),
+				new Fire({ x: CANVAS_WIDTH * 4 - 300, y: CANVAS_HEIGHT - 150 }),
+			];
+			snakes = [
+				new Snake({ x: CANVAS_WIDTH * 6 + 55, y: CANVAS_HEIGHT - 130 }),
+			];
+			snails = [new Snail({ x: imagew + 500, y: CANVAS_HEIGHT - 130 })];
+
+			springs = [new Spring({ x: imagew * 6 - 20, y: 350 })];
+			let redspikeImg = createImage("./assets/images/obstacles/spikesRed.png");
+			redspikeImg.onload = () => {
+				spikes = [
+					new Spikes({ x: 300, y: CANVAS_HEIGHT - 110 }, redspikeImg),
+					new Spikes({ x: 360, y: CANVAS_HEIGHT - 110 }, redspikeImg),
+				];
+			};
+
+			frogs = [
+				new Frog({ x: imagew * 3, y: CANVAS_HEIGHT - 130 }),
+			];
+
+			for (let i = 0; i < 30; i++) {
+				lavas.push(new Lava({ x: imagew * 2 + i * 25, y: CANVAS_HEIGHT - 30 }));
+			}
+			for (let i = 0; i < 43; i++) {
+				lavas.push(new Lava({ x: imagew * 5 + i * 25, y: CANVAS_HEIGHT - 30 }));
+			}
+
+			spiders = [
+				new Spider({ x: imagew * 5 - 150, y:  180 }),
+				new Spider({ x: imagew * 5 - 110, y:  200 }),
+				new Spider({ x: CANVAS_WIDTH * 6, y:  220 }),
+			];
 			//spawn birds every 4 seconds
 			birds = [];
 
@@ -310,6 +417,12 @@ export function movement(player, platform, background, ctx) {
 				frogs.forEach((frog) => {
 					frog.position.x -= SPEED * bgMultiplier;
 				});
+				lavas.forEach((lava) => {
+					lava.position.x -= SPEED * bgMultiplier;
+				});
+				spiders.forEach((spider) => {
+					spider.position.x -= SPEED * bgMultiplier;
+				});
 			}
 		}
 	}
@@ -342,21 +455,21 @@ export function movement(player, platform, background, ctx) {
 		snake.update(ctx);
 		if (snake.collision(player)) {
 			deathSound.play();
-			endGame(true);
+			// endGame(true);
 		}
 	});
 	snails.forEach((snail) => {
 		snail.update(ctx);
 		if (snail.collision(player)) {
 			deathSound.play();
-			endGame(true);
+			// endGame(true);
 		}
 	});
 	birds.forEach((bird) => {
 		bird.update(ctx);
 		if (bird.collision(player)) {
 			deathSound.play();
-			endGame(true);
+			// endGame(true);
 		}
 	});
 	fruits.forEach((fruit, i) => {
@@ -384,14 +497,28 @@ export function movement(player, platform, background, ctx) {
 		spike.update(ctx);
 		if (spike.collision(player)) {
 			deathSound.play();
-			endGame(true);
+			// endGame(true);
 		}
 	});
 	frogs.forEach((frog) => {
 		frog.update(ctx);
 		if (frog.collision(player)) {
 			deathSound.play();
-			endGame(true);
+			// endGame(true);
+		}
+	});
+	lavas.forEach((lava) => {
+		lava.update(ctx);
+		if (lava.collision(player)) {
+			deathSound.play();
+			// endGame(true);
+		}
+	});
+	spiders.forEach((spider) => {
+		spider.update(ctx);
+		if (spider.collision(player)) {
+			deathSound.play();
+			// endGame(true);
 		}
 	});
 
