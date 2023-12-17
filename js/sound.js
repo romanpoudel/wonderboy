@@ -14,5 +14,7 @@ const fruitSound=sound("./assets/sounds/fruit.mp3");
 
 const throwSound=sound("./assets/sounds/throw.mp3");
 
+const menuSound=sound("./assets/sounds/menu.mp3");
 
-export {deathSound, fruitSound, gameSound, jumpSound, throwSound};
+
+export {deathSound, fruitSound, gameSound, jumpSound, throwSound, menuSound};

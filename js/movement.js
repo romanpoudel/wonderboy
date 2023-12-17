@@ -27,10 +27,10 @@ let fruits = [new Fruit(), new Fruit(), new Fruit(), new Fruit(), new Fruit()];
 // Check for collisions and reposition fruits if necessary
 fruits.forEach((fruit, i) => {
 	for (let j = 0; j < i; j++) {
-			// Check collision with previous fruits
-			while (fruit.fruitCollision(fruits[j])) {
-					fruit.position.x = randomNum(40, 5000);
-			}
+		// Check collision with previous fruits
+		while (fruit.fruitCollision(fruits[j])) {
+			fruit.position.x = randomNum(40, 5000);
+		}
 	}
 });
 let fruitScore = 0;
@@ -59,12 +59,14 @@ let snakes = [
 
 //spawn birds every 4 seconds
 let birds = [];
+let birdTiming = 9000;
+
 let interval = setInterval(() => {
 	birds.push(new Bird({ x: CANVAS_WIDTH, y: CANVAS_HEIGHT - 260 }));
 	//remove birds out of screen
 	birds = birds.filter((bird) => !bird.isMarkedForDeletion);
 	lavas = lavas.filter((lava) => !lava.isMarkedForDeletion);
-}, 9000);
+}, birdTiming);
 //checkpoints
 let checkpoints = [
 	new CheckPoint({ x: 0, y: CANVAS_HEIGHT - 140 }, 0),
@@ -88,19 +90,20 @@ export function initMove(gameLevel) {
 	switch (gameLevel) {
 		case 1:
 			// Level 1
+			birdTiming = 9000;
 			bgMultiplier = 0.1;
 			maxScrollOffset = 48400;
 			//fruits spawn
-			fruits=[];
+			fruits = [];
 			for (let i = 0; i < 5; i++) {
 				fruits.push(new Fruit());
 			}
 			fruits.forEach((fruit, i) => {
 				for (let j = 0; j < i; j++) {
-						// Check collision with previous fruits
-						while (fruit.fruitCollision(fruits[j])) {
-								fruit.position.x = randomNum(40, 5000);
-						}
+					// Check collision with previous fruits
+					while (fruit.fruitCollision(fruits[j])) {
+						fruit.position.x = randomNum(40, 5000);
+					}
 				}
 			});
 			fruitScore = 0;
@@ -134,8 +137,15 @@ export function initMove(gameLevel) {
 			lavas = [];
 			spiders = [];
 			dangers = [];
-			//spawn birds every 4 seconds
+			//spawn birds 
 			birds = [];
+			clearInterval(interval);
+			interval = setInterval(() => {
+				birds.push(new Bird({ x: CANVAS_WIDTH, y: CANVAS_HEIGHT - 260 }));
+				//remove birds out of screen
+				birds = birds.filter((bird) => !bird.isMarkedForDeletion);
+				lavas = lavas.filter((lava) => !lava.isMarkedForDeletion);
+			}, birdTiming);
 
 			//checkpoints
 			checkpoints = [
@@ -148,19 +158,20 @@ export function initMove(gameLevel) {
 			scrollOffset = 0;
 			break;
 		case 2:
+			birdTiming = 8000;
 			bgMultiplier = 0.1;
 			maxScrollOffset = 48400;
 			//fruits spawn
-			fruits=[];
+			fruits = [];
 			for (let i = 0; i < 15; i++) {
 				fruits.push(new Fruit());
 			}
 			fruits.forEach((fruit, i) => {
 				for (let j = 0; j < i; j++) {
-						// Check collision with previous fruits
-						while (fruit.fruitCollision(fruits[j])) {
-								fruit.position.x = randomNum(40, 5000);
-						}
+					// Check collision with previous fruits
+					while (fruit.fruitCollision(fruits[j])) {
+						fruit.position.x = randomNum(40, 5000);
+					}
 				}
 			});
 			fruitScore = 0;
@@ -197,8 +208,15 @@ export function initMove(gameLevel) {
 			spiders = [];
 			dangers = [];
 
-			//spawn birds every 4 seconds
+			//spawn birds  
 			birds = [];
+			clearInterval(interval);
+			interval = setInterval(() => {
+				birds.push(new Bird({ x: CANVAS_WIDTH, y: CANVAS_HEIGHT - 260 }));
+				//remove birds out of screen
+				birds = birds.filter((bird) => !bird.isMarkedForDeletion);
+				lavas = lavas.filter((lava) => !lava.isMarkedForDeletion);
+			}, birdTiming);
 
 			//checkpoints
 			checkpoints = [
@@ -211,19 +229,20 @@ export function initMove(gameLevel) {
 			scrollOffset = 0;
 			break;
 		case 3:
+			birdTiming = 7000;
 			bgMultiplier = 0.0909;
 			maxScrollOffset = 53000;
 			//fruits spawn
-			fruits=[];
+			fruits = [];
 			for (let i = 0; i < 15; i++) {
 				fruits.push(new Fruit());
 			}
 			fruits.forEach((fruit, i) => {
 				for (let j = 0; j < i; j++) {
-						// Check collision with previous fruits
-						while (fruit.fruitCollision(fruits[j])) {
-								fruit.position.x = randomNum(40, 5000);
-						}
+					// Check collision with previous fruits
+					while (fruit.fruitCollision(fruits[j])) {
+						fruit.position.x = randomNum(40, 5000);
+					}
 				}
 			});
 			fruitScore = 0;
@@ -267,8 +286,15 @@ export function initMove(gameLevel) {
 			spiders = [];
 			dangers = [];
 
-			//spawn birds every 4 seconds
+			//spawn birds 
 			birds = [];
+			clearInterval(interval);
+			interval = setInterval(() => {
+				birds.push(new Bird({ x: CANVAS_WIDTH, y: CANVAS_HEIGHT - 260 }));
+				//remove birds out of screen
+				birds = birds.filter((bird) => !bird.isMarkedForDeletion);
+				lavas = lavas.filter((lava) => !lava.isMarkedForDeletion);
+			}, birdTiming);
 
 			//checkpoints
 			checkpoints = [
@@ -281,19 +307,20 @@ export function initMove(gameLevel) {
 			scrollOffset = 0;
 			break;
 		case 4:
+			birdTiming = 6000;
 			bgMultiplier = 0.0833333333333333;
 			maxScrollOffset = 58000;
 			//fruits spawn
-			fruits=[];
+			fruits = [];
 			for (let i = 0; i < 20; i++) {
 				fruits.push(new Fruit());
 			}
 			fruits.forEach((fruit, i) => {
 				for (let j = 0; j < i; j++) {
-						// Check collision with previous fruits
-						while (fruit.fruitCollision(fruits[j])) {
-								fruit.position.x = randomNum(40, 5000);
-						}
+					// Check collision with previous fruits
+					while (fruit.fruitCollision(fruits[j])) {
+						fruit.position.x = randomNum(40, 5000);
+					}
 				}
 			});
 			fruitScore = 0;
@@ -342,8 +369,15 @@ export function initMove(gameLevel) {
 				new Spider({ x: imagew * 5 - 110, y: 200 }),
 				new Spider({ x: CANVAS_WIDTH * 6, y: 220 }),
 			];
-			//spawn birds every 4 seconds
+			//spawn birds 
 			birds = [];
+			clearInterval(interval);
+			interval = setInterval(() => {
+				birds.push(new Bird({ x: CANVAS_WIDTH, y: CANVAS_HEIGHT - 260 }));
+				//remove birds out of screen
+				birds = birds.filter((bird) => !bird.isMarkedForDeletion);
+				lavas = lavas.filter((lava) => !lava.isMarkedForDeletion);
+			}, birdTiming);
 
 			//checkpoints
 			checkpoints = [
@@ -356,19 +390,20 @@ export function initMove(gameLevel) {
 			scrollOffset = 0;
 			break;
 		case 5:
+			birdTiming = 5000;
 			bgMultiplier = 0.0833333333333333;
 			maxScrollOffset = 58000;
 			//fruits spawn
-			fruits=[];
+			fruits = [];
 			for (let i = 0; i < 30; i++) {
 				fruits.push(new Fruit());
 			}
 			fruits.forEach((fruit, i) => {
 				for (let j = 0; j < i; j++) {
-						// Check collision with previous fruits
-						while (fruit.fruitCollision(fruits[j])) {
-								fruit.position.x = randomNum(40, 5000);
-						}
+					// Check collision with previous fruits
+					while (fruit.fruitCollision(fruits[j])) {
+						fruit.position.x = randomNum(40, 5000);
+					}
 				}
 			});
 			fruitScore = 0;
@@ -420,8 +455,15 @@ export function initMove(gameLevel) {
 			];
 
 			dangers = [new DangerHead({ x: 800, y: CANVAS_HEIGHT - 150 })];
-			//spawn birds every 4 seconds
+			//spawn birds
 			birds = [];
+			clearInterval(interval);
+			interval = setInterval(() => {
+				birds.push(new Bird({ x: CANVAS_WIDTH, y: CANVAS_HEIGHT - 260 }));
+				//remove birds out of screen
+				birds = birds.filter((bird) => !bird.isMarkedForDeletion);
+				lavas = lavas.filter((lava) => !lava.isMarkedForDeletion);
+			}, birdTiming);
 
 			//checkpoints
 			checkpoints = [
@@ -543,21 +585,21 @@ export function movement(player, platform, background, ctx) {
 		snake.update(ctx);
 		if (snake.collision(player)) {
 			deathSound.play();
-			// endGame(true);
+			endGame(true);
 		}
 	});
 	snails.forEach((snail) => {
 		snail.update(ctx);
 		if (snail.collision(player)) {
 			deathSound.play();
-			// endGame(true);
+			endGame(true);
 		}
 	});
 	birds.forEach((bird) => {
 		bird.update(ctx);
 		if (bird.collision(player)) {
 			deathSound.play();
-			// endGame(true);
+			endGame(true);
 		}
 	});
 	fruits.forEach((fruit, i) => {
@@ -578,42 +620,54 @@ export function movement(player, platform, background, ctx) {
 		if (spring.collision(player)) {
 			player.velocity.y = -15;
 			player.frames = 5;
-			jumpSound.play();
+			jumpSound.play().catch((err) => {
+				console.log(err);
+			});
 		}
 	});
 	spikes.forEach((spike) => {
 		spike.update(ctx);
 		if (spike.collision(player)) {
-			deathSound.play();
-			// endGame(true);
+			deathSound.play().catch((err) => {
+				console.log(err);
+			});
+			endGame(true);
 		}
 	});
 	frogs.forEach((frog) => {
 		frog.update(ctx);
 		if (frog.collision(player)) {
-			deathSound.play();
-			// endGame(true);
+			deathSound.play().catch((err) => {
+				console.log(err);
+			});
+			endGame(true);
 		}
 	});
 	lavas.forEach((lava) => {
 		lava.update(ctx);
 		if (lava.collision(player)) {
-			deathSound.play();
-			// endGame(true);
+			deathSound.play().catch((err) => {
+				console.log(err);
+			});
+			endGame(true);
 		}
 	});
 	spiders.forEach((spider) => {
 		spider.update(ctx);
 		if (spider.collision(player)) {
-			deathSound.play();
-			// endGame(true);
+			deathSound.play().catch((err) => {
+				console.log(err);
+			});
+			endGame(true);
 		}
 	});
 	dangers.forEach((danger) => {
 		danger.update(ctx);
 		if (danger.collision(player)) {
-			deathSound.play();
-			// endGame(true);
+			deathSound.play().catch((err) => {
+				console.log(err);
+			});
+			endGame(true);
 		}
 	});
 
@@ -624,6 +678,9 @@ export function movement(player, platform, background, ctx) {
 			if (hammer.collision(bird)) {
 				birds.splice(i, 1);
 				enemyScore += 150;
+				fruitSound.play().catch((err) => {
+					console.log(err);
+				});
 			}
 		});
 		//dangerHead
@@ -631,6 +688,9 @@ export function movement(player, platform, background, ctx) {
 			if (hammer.collision(danger)) {
 				dangers.splice(i, 1);
 				enemyScore += 150;
+				fruitSound.play().catch((err) => {
+					console.log(err);
+				});
 			}
 		});
 		//frog
@@ -638,6 +698,9 @@ export function movement(player, platform, background, ctx) {
 			if (hammer.collision(frog)) {
 				frogs.splice(i, 1);
 				enemyScore += 150;
+				fruitSound.play().catch((err) => {
+					console.log(err);
+				});
 			}
 		});
 		// snail
@@ -645,6 +708,9 @@ export function movement(player, platform, background, ctx) {
 			if (hammer.collision(snail)) {
 				snails.splice(i, 1);
 				enemyScore += 150;
+				fruitSound.play().catch((err) => {
+					console.log(err);
+				});
 			}
 		});
 		// snake
@@ -652,6 +718,9 @@ export function movement(player, platform, background, ctx) {
 			if (hammer.collision(snake)) {
 				snakes.splice(i, 1);
 				enemyScore += 150;
+				fruitSound.play().catch((err) => {
+					console.log(err);
+				});
 			}
 		});
 		// spider
@@ -659,6 +728,9 @@ export function movement(player, platform, background, ctx) {
 			if (hammer.collision(spider)) {
 				spiders.splice(i, 1);
 				enemyScore += 150;
+				fruitSound.play().catch((err) => {
+					console.log(err);
+				});
 			}
 		});
 	});

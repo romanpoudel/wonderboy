@@ -6,13 +6,24 @@ import { Platform } from "./Platform.js";
 import { collisionBottom, collisionSide, collisionTop } from "./collision.js";
 import { Background } from "./Background.js";
 import { Enemy } from "./Enemy/Enemy.js";
-import { gameSound } from "./sound.js";
+import { gameSound, menuSound, throwSound } from "./sound.js";
 import "./level.js";
 import { gameLevel } from "./level.js";
 import { initMove } from "./movement.js";
 import { Lift } from "./Lift.js";
 
+//start screen
+const startScreen=document.querySelector(".start");
+menuSound.play().catch((err) => {
+	console.log(err);
+});
+setTimeout(() => {
+	startScreen.style.display="none";
+	menuSound.pause();
+}, 3000);
+
 const scoreValue = document.querySelector(".score__value");
+
 
 export let hammers = [];
 
@@ -80,6 +91,9 @@ canvas.addEventListener("click", function (event) {
 	} else {
 		let hammer = player.shoot();
 		hammers.push(hammer);
+		throwSound.play().catch((err) => {
+			console.log(err);
+		});
 	}
 });
 
