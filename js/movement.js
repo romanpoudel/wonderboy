@@ -12,7 +12,7 @@ import { endGame } from "./index.js";
 import { Snail } from "./Enemy/Snail.js";
 import { Spikes } from "./Enemy/Spikes.js";
 import { Frog } from "./Enemy/Frog.js";
-import { createImage } from "./utils.js";
+import { createImage, randomNum } from "./utils.js";
 import { Lava } from "./Enemy/Lava.js";
 import { Spider } from "./Enemy/Spider.js";
 import { DangerHead } from "./Enemy/DangerHead.js";
@@ -24,6 +24,15 @@ let maxScrollOffset = 48400;
 
 //fruits spawn
 let fruits = [new Fruit(), new Fruit(), new Fruit(), new Fruit(), new Fruit()];
+// Check for collisions and reposition fruits if necessary
+fruits.forEach((fruit, i) => {
+	for (let j = 0; j < i; j++) {
+			// Check collision with previous fruits
+			while (fruit.fruitCollision(fruits[j])) {
+					fruit.position.x = randomNum(40, 5000);
+			}
+	}
+});
 let fruitScore = 0;
 let enemyScore = 0;
 
@@ -82,9 +91,18 @@ export function initMove(gameLevel) {
 			bgMultiplier = 0.1;
 			maxScrollOffset = 48400;
 			//fruits spawn
+			fruits=[];
 			for (let i = 0; i < 5; i++) {
 				fruits.push(new Fruit());
 			}
+			fruits.forEach((fruit, i) => {
+				for (let j = 0; j < i; j++) {
+						// Check collision with previous fruits
+						while (fruit.fruitCollision(fruits[j])) {
+								fruit.position.x = randomNum(40, 5000);
+						}
+				}
+			});
 			fruitScore = 0;
 			enemyScore = 0;
 
@@ -133,9 +151,18 @@ export function initMove(gameLevel) {
 			bgMultiplier = 0.1;
 			maxScrollOffset = 48400;
 			//fruits spawn
+			fruits=[];
 			for (let i = 0; i < 15; i++) {
 				fruits.push(new Fruit());
 			}
+			fruits.forEach((fruit, i) => {
+				for (let j = 0; j < i; j++) {
+						// Check collision with previous fruits
+						while (fruit.fruitCollision(fruits[j])) {
+								fruit.position.x = randomNum(40, 5000);
+						}
+				}
+			});
 			fruitScore = 0;
 			enemyScore = 0;
 
@@ -187,9 +214,18 @@ export function initMove(gameLevel) {
 			bgMultiplier = 0.0909;
 			maxScrollOffset = 53000;
 			//fruits spawn
+			fruits=[];
 			for (let i = 0; i < 15; i++) {
 				fruits.push(new Fruit());
 			}
+			fruits.forEach((fruit, i) => {
+				for (let j = 0; j < i; j++) {
+						// Check collision with previous fruits
+						while (fruit.fruitCollision(fruits[j])) {
+								fruit.position.x = randomNum(40, 5000);
+						}
+				}
+			});
 			fruitScore = 0;
 			enemyScore = 0;
 
@@ -248,9 +284,18 @@ export function initMove(gameLevel) {
 			bgMultiplier = 0.0833333333333333;
 			maxScrollOffset = 58000;
 			//fruits spawn
+			fruits=[];
 			for (let i = 0; i < 20; i++) {
 				fruits.push(new Fruit());
 			}
+			fruits.forEach((fruit, i) => {
+				for (let j = 0; j < i; j++) {
+						// Check collision with previous fruits
+						while (fruit.fruitCollision(fruits[j])) {
+								fruit.position.x = randomNum(40, 5000);
+						}
+				}
+			});
 			fruitScore = 0;
 			enemyScore = 0;
 
@@ -284,6 +329,7 @@ export function initMove(gameLevel) {
 
 			frogs = [new Frog({ x: imagew * 3, y: CANVAS_HEIGHT - 130 })];
 
+			lavas = [];
 			for (let i = 0; i < 30; i++) {
 				lavas.push(new Lava({ x: imagew * 2 + i * 25, y: CANVAS_HEIGHT - 30 }));
 			}
@@ -313,9 +359,18 @@ export function initMove(gameLevel) {
 			bgMultiplier = 0.0833333333333333;
 			maxScrollOffset = 58000;
 			//fruits spawn
+			fruits=[];
 			for (let i = 0; i < 30; i++) {
 				fruits.push(new Fruit());
 			}
+			fruits.forEach((fruit, i) => {
+				for (let j = 0; j < i; j++) {
+						// Check collision with previous fruits
+						while (fruit.fruitCollision(fruits[j])) {
+								fruit.position.x = randomNum(40, 5000);
+						}
+				}
+			});
 			fruitScore = 0;
 			enemyScore = 0;
 
@@ -348,6 +403,8 @@ export function initMove(gameLevel) {
 			};
 
 			frogs = [new Frog({ x: imagew * 3, y: CANVAS_HEIGHT - 130 })];
+
+			lavas = [];
 
 			for (let i = 0; i < 30; i++) {
 				lavas.push(new Lava({ x: imagew * 2 + i * 25, y: CANVAS_HEIGHT - 30 }));

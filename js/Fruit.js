@@ -36,4 +36,12 @@ export class Fruit {
 	collision(player) {
 		return areColliding(this, player);
 	}
+	fruitCollision(otherItem) {
+		return (
+			this.position.x <= otherItem.position.x + otherItem.width &&
+			this.position.x + this.width >= otherItem.position.x &&
+			this.position.y <= otherItem.position.y + otherItem.height &&
+			this.position.y + this.height >= otherItem.position.y
+		);
+	}
 }
