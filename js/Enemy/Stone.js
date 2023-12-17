@@ -1,4 +1,4 @@
-import { BGMULTIPLLIER, CANVAS_HEIGHT, CANVAS_WIDTH, SPEED } from "../constants.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, SPEED } from "../constants.js";
 import { createImage } from "../utils.js";
 import { Enemy } from "./Enemy.js";
 

@@ -4,9 +4,6 @@ const CANVAS_HEIGHT = 490;
 const GRAVITY = 0.5;
 const imagew=706;
 
-//as background image is repeated due to foreach loop while drawing platform
-const BGMULTIPLLIER=0.10;
-
 const SPEED=5;
 
-export { CANVAS_WIDTH, CANVAS_HEIGHT, GRAVITY ,BGMULTIPLLIER,imagew,SPEED};
+export { CANVAS_WIDTH, CANVAS_HEIGHT, GRAVITY ,imagew,SPEED};

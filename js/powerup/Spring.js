@@ -4,7 +4,7 @@ import { createImage } from "../utils.js";
 export class Spring {
 	constructor(position) {
 		this.position = position;
-		this.image = createImage("./assets/images/powerups/spring.png");
+		this.image = createImage("./assets/images/powerups/springPlatform.png");
 		this.image.onload = () => {
 			this.width = 40;
 			this.height = 20;
