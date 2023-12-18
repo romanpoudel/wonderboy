@@ -11,19 +11,19 @@ import "./level.js";
 import { gameLevel } from "./level.js";
 import { initMove } from "./movement.js";
 import { Lift } from "./Lift.js";
+import { FRAME_RATE } from "./constants.js";
 
 //start screen
-const startScreen=document.querySelector(".start");
+const startScreen = document.querySelector(".start");
 menuSound.play().catch((err) => {
 	console.log(err);
 });
 setTimeout(() => {
-	startScreen.style.display="none";
+	startScreen.style.display = "none";
 	menuSound.pause();
 }, 3000);
 
 const scoreValue = document.querySelector(".score__value");
-
 
 export let hammers = [];
 
@@ -96,7 +96,6 @@ canvas.addEventListener("click", function (event) {
 		});
 	}
 });
-
 
 let platforms = [];
 image.onload = function () {
@@ -293,72 +292,79 @@ export function endGame(state) {
 }
 //event listener to load images first
 window.addEventListener("load", () => {
+	// Set maximum framerate for higher refresh rate screens
+	let lastRenderTime = 0;
+	let frameDuration = 1000 / FRAME_RATE;
 	//animation loop
-	function animate() {
-		if (!hasGameEnded && !isGamePaused) {
-			ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-			background.draw(ctx);
-			background.update();
-			//play pause
-			const pause = playBtn
-				? createImage("./assets/images/play.png")
-				: createImage("./assets/images/pause.png");
-			ctx.drawImage(pause, CANVAS_WIDTH - 100, 5, 40, 40);
-			const speaker = sound
-				? createImage("./assets/images/unmute.png")
-				: createImage("./assets/images/mute.png");
-			//start game sound
-			if (sound) {
-				gameSound.play().catch((err) => {
-					console.log(err);
+	function animate(currentTime) {
+		const timeSinceLastRender = currentTime - lastRenderTime;
+		if (timeSinceLastRender >= frameDuration) {
+			lastRenderTime = currentTime - (timeSinceLastRender % frameDuration);
+			if (!hasGameEnded && !isGamePaused) {
+				ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+				background.draw(ctx);
+				background.update();
+				//play pause
+				const pause = playBtn
+					? createImage("./assets/images/play.png")
+					: createImage("./assets/images/pause.png");
+				ctx.drawImage(pause, CANVAS_WIDTH - 100, 5, 40, 40);
+				const speaker = sound
+					? createImage("./assets/images/unmute.png")
+					: createImage("./assets/images/mute.png");
+				//start game sound
+				if (sound) {
+					gameSound.play().catch((err) => {
+						console.log(err);
+					});
+				} else {
+					gameSound.pause();
+				}
+				ctx.drawImage(speaker, CANVAS_WIDTH - 50, 5, 40, 40);
+
+				//score
+				ctx.font = "bold 18px Arial ";
+				ctx.fillStyle = "black";
+				ctx.fillText("Score: " + player.score, 20, 30);
+				ctx.fillText("Level: " + gameLevel, 150, 30);
+
+				platforms.forEach((platform) => {
+					movement(player, platform, background, ctx);
+					platform.update(ctx);
 				});
-			} else {
-				gameSound.pause();
+				player.update(ctx);
+
+				//collision detection
+				platforms.forEach((platform) => {
+					if (collisionTop(player, platform)) {
+						player.velocity.y = 0;
+						player.isAtPlatform = true;
+						///update the code
+						if (platform instanceof Lift) {
+							console.log(platform.speed);
+							console.log(platform.position.y, platform.position.x);
+							player.position.y += platform.speed;
+						}
+					}
+					if (collisionBottom(player, platform)) {
+						player.velocity.y = -player.velocity.y;
+					}
+					if (collisionSide(player, platform)) {
+						if (player.facing === "right") {
+							player.position.x = platform.position.x - player.width;
+						} else if (player.facing === "left") {
+							player.position.x = platform.position.x + platform.width;
+						}
+					}
+				});
+				//update hammer
+				hammers.forEach((hammer, i) => {
+					hammer.update(ctx);
+					if (hammer.isOutOfScreen()) {
+						hammers.splice(i, 1);
+					}
+				});
 			}
-			ctx.drawImage(speaker, CANVAS_WIDTH - 50, 5, 40, 40);
-
-			//score
-			ctx.font = "bold 18px Arial ";
-			ctx.fillStyle = "black";
-			ctx.fillText("Score: " + player.score, 20, 30);
-			ctx.fillText("Level: " + gameLevel, 150, 30);
-
-			platforms.forEach((platform) => {
-				movement(player, platform, background, ctx);
-				platform.update(ctx);
-			});
-			player.update(ctx);
-
-			//collision detection
-			platforms.forEach((platform) => {
-				if (collisionTop(player, platform)) {
-					player.velocity.y = 0;
-					player.isAtPlatform = true;
-					///update the code
-					if (platform instanceof Lift) {
-						console.log(platform.speed);
-						console.log(platform.position.y, platform.position.x);
-						player.position.y += platform.speed;
-					}
-				}
-				if (collisionBottom(player, platform)) {
-					player.velocity.y = -player.velocity.y;
-				}
-				if (collisionSide(player, platform)) {
-					if (player.facing === "right") {
-						player.position.x = platform.position.x - player.width;
-					} else if (player.facing === "left") {
-						player.position.x = platform.position.x + platform.width;
-					}
-				}
-			});
-			//update hammer
-			hammers.forEach((hammer,i) => {
-				hammer.update(ctx);
-				if (hammer.isOutOfScreen()) {
-					hammers.splice(i, 1);
-				}
-			});
 		}
 		requestAnimationFrame(animate);
 	}
